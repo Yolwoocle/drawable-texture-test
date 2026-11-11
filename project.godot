@@ -13,12 +13,20 @@ config_version=5
 config/name="drawable_texture_test"
 run/main_scene="uid://c8hla63rn7ie4"
 config/features=PackedStringArray("4.7", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://cfs8odqm31ovn"
+
+[autoload]
+
+Init="*uid://dy4bog1wtk64m"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/shaker/plugin.cfg", "res://addons/tube/plugin.cfg")
 
 [input]
 

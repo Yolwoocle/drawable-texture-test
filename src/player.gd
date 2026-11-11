@@ -13,6 +13,10 @@ const JUMP_VELOCITY = 4.5
 var interacted_object: Node3D
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+
+
+func enable():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 

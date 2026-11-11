@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TubeContext" format=3 uid="uid://dcu7wrfcxlp0u"]
+
+[ext_resource type="Script" uid="uid://t4pe7yqc3pnt" path="res://addons/tube/tube_context.gd" id="1_ckujf"]
+
+[resource]
+script = ExtResource("1_ckujf")
+app_id = "e0W5gF;@^m&Ax&{"
+session_id_characters_set = "ABCDEFGHJKMNPQRSTUVWXY123456789"
+trackers_urls = Array[String](["wss://tracker.androodev.com", "wss://tracker.webtorrent.dev", "wss://open.ftorrent.com", "wss://tracker.openwebtorrent.com"])
+stun_servers_urls = Array[String](["stun:stun.l.google.com:19302", "stun:stun.cloudflare.com:3478"])
+metadata/_custom_type_script = "uid://t4pe7yqc3pnt"

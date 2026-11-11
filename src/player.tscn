@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bt05aaf5nwip"]
 
 [ext_resource type="Script" uid="uid://b21c5m5qgaj80" path="res://src/player.gd" id="1_lowyb"]
+[ext_resource type="Texture2D" uid="uid://bm3bx85ij3bfg" path="res://assets/face.png" id="2_gmfve"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
 
@@ -18,6 +19,11 @@ mesh = SubResource("CapsuleMesh_g4v7s")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=780948810]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50453544, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Camera3D" unique_id=1418116726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.006882429, -0.49931026)
+visible = false
+texture = ExtResource("2_gmfve")
 
 [node name="CameraRaycast" type="RayCast3D" parent="Camera3D" unique_id=754008345]
 target_position = Vector3(0, 0, -6)

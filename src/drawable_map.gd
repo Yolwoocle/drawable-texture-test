@@ -11,6 +11,7 @@ var drawable_texture: DrawableTexture2D
 
 @onready var _mesh_inst: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+@onready var main: Node3D = $".."
 
 var _last_draw_pos: Vector2i
 var _is_drawing: bool = false
@@ -48,28 +49,34 @@ func _input(event: InputEvent) -> void:
 			Key.KEY_1:
 				draw_color = Color.BLACK
 				is_eraser = false
+				main.select_hotbar(0)
 			Key.KEY_2:
 				draw_color = Color.RED
 				is_eraser = false
+				main.select_hotbar(1)
 			Key.KEY_3:
 				draw_color = Color.BLUE
 				is_eraser = false
+				main.select_hotbar(2)
 			Key.KEY_4:
 				draw_color = Color.GREEN
 				is_eraser = false
+				main.select_hotbar(3)
 			Key.KEY_5:
 				draw_color = Color.WHITE
 				is_eraser = true
+				main.select_hotbar(4)
 
 
-func _interpolate_draw(pos1: Vector2i, pos2: Vector2i) -> void:
+@rpc("any_peer", "call_local")
+func _interpolate_draw(pos1: Vector2i, pos2: Vector2i, color: Color, eraser: bool) -> void:
 	var steps = max(pos2.distance_to(pos1), 1.0)
 	for i in steps:
 		var pos = lerp(Vector2(pos1), Vector2(pos2), float(i) / float(steps))
-		var tex = eraser_texture if is_eraser else pen_texture
-		var mat = eraser_material if is_eraser else null 
+		var tex = eraser_texture if eraser else pen_texture
+		var mat = eraser_material if eraser else null 
 		
-		drawable_texture.blit_rect(Rect2i(pos - tex.get_size()/2, tex.get_size()), tex, draw_color, 0, mat)
+		drawable_texture.blit_rect(Rect2i(pos - tex.get_size()/2, tex.get_size()), tex, color, 0, mat)
 
 
 func interact_at(event_position: Vector3):
@@ -79,11 +86,10 @@ func interact_at(event_position: Vector3):
 	var transf_pos = (transform.affine_inverse() * event_position)
 	var uv_pos = (Vector2(transf_pos.x, transf_pos.z) / size) + Vector2(0.5, 0.5)
 	var tex_pos = uv_pos * background_texture.get_size()
-	print(event_position, " -> ", transf_pos, " -> ", uv_pos, " -> ", tex_pos)
 	
 	if _last_draw_pos == Vector2i.MAX:
 		_last_draw_pos = tex_pos
-	_interpolate_draw(_last_draw_pos, tex_pos)
+	_interpolate_draw.rpc(_last_draw_pos, tex_pos, draw_color, is_eraser)
 	_last_draw_pos = tex_pos
 
 

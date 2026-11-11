@@ -5,9 +5,21 @@
 [ext_resource type="Shader" uid="uid://dree6qjuw2kwy" path="res://src/texutre_rect.gdshader" id="2_kmhfv"]
 [ext_resource type="Texture2D" uid="uid://d1khv5h33ahbt" path="res://assets/empty_canvas.png" id="3_rlaii"]
 [ext_resource type="Script" uid="uid://lbqipv2j8mju" path="res://src/drawable_map.gd" id="4_5mrjc"]
+[ext_resource type="Texture2D" uid="uid://o723aibrfgpt" path="res://assets/marker_black.png" id="5_kqbth"]
 [ext_resource type="Texture2D" uid="uid://b6ur0u55orfc3" path="res://assets/pen_shape.png" id="5_rlaii"]
 [ext_resource type="Texture2D" uid="uid://bujkxul7vcco7" path="res://assets/eraser_shape.png" id="6_5mrjc"]
+[ext_resource type="Texture2D" uid="uid://cvhynunyevo1l" path="res://assets/marker_red.png" id="6_mlv6i"]
+[ext_resource type="Texture2D" uid="uid://dvxaid42x5ogg" path="res://assets/marker_blue.png" id="7_tb146"]
 [ext_resource type="PackedScene" uid="uid://bt05aaf5nwip" path="res://src/player.tscn" id="8_5mrjc"]
+[ext_resource type="Texture2D" uid="uid://bp2joh3hvpla0" path="res://assets/marker_green.png" id="8_e7lu8"]
+[ext_resource type="Texture2D" uid="uid://m4enrwk74rmn" path="res://assets/brush.png" id="9_tb146"]
+[ext_resource type="Script" uid="uid://dnqx4xtfydlro" path="res://src/join_menu.gd" id="9_uewes"]
+[ext_resource type="Script" uid="uid://cy006uvidc4y" path="res://addons/tube/tube_client.gd" id="10_mgm53"]
+[ext_resource type="Resource" uid="uid://dcu7wrfcxlp0u" path="res://resources/online/tube_context.tres" id="11_uewes"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rlaii"]
 
@@ -40,10 +52,19 @@ shader_parameter/bg_texture = ExtResource("3_rlaii")
 material = SubResource("ShaderMaterial_1bvp3")
 size = Vector2(3, 3)
 
+[sub_resource type="LabelSettings" id="LabelSettings_uewes"]
+font_color = Color(1, 0.38, 0.38, 1)
+
 [node name="Main" type="Node3D" unique_id=1407832290]
 script = ExtResource("1_fyndt")
 
-[node name="Control" type="Control" parent="." unique_id=983727436]
+[node name="TubeClient" type="Node" parent="." unique_id=745561958]
+unique_name_in_owner = true
+script = ExtResource("10_mgm53")
+context = ExtResource("11_uewes")
+metadata/_custom_type_script = "uid://cy006uvidc4y"
+
+[node name="HUD" type="Control" parent="." unique_id=983727436]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,7 +72,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1742147748]
+[node name="TextureRect" type="TextureRect" parent="HUD" unique_id=1742147748]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -67,6 +88,91 @@ grow_vertical = 2
 offset_transform_enabled = true
 offset_transform_scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_5mrjc")
+
+[node name="Label" type="Label" parent="HUD" unique_id=2142290803]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Hotbar" type="HBoxContainer" parent="HUD" unique_id=684003151]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Hotbar" unique_id=760063791]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer" unique_id=568383796]
+layout_mode = 2
+text = "[1]"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer" unique_id=803837940]
+layout_mode = 2
+offset_transform_enabled = true
+texture = ExtResource("5_kqbth")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HUD/Hotbar" unique_id=1284214651]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer2" unique_id=1662701905]
+layout_mode = 2
+text = "[2]"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer2" unique_id=681067212]
+layout_mode = 2
+offset_transform_enabled = true
+texture = ExtResource("6_mlv6i")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HUD/Hotbar" unique_id=1847766312]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer3" unique_id=639830951]
+layout_mode = 2
+text = "[3]"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer3" unique_id=2035765413]
+layout_mode = 2
+offset_transform_enabled = true
+texture = ExtResource("7_tb146")
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="HUD/Hotbar" unique_id=85254298]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer4" unique_id=328617314]
+layout_mode = 2
+text = "[4]"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer4" unique_id=755357585]
+layout_mode = 2
+offset_transform_enabled = true
+texture = ExtResource("8_e7lu8")
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="HUD/Hotbar" unique_id=1843330199]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer5" unique_id=1448339306]
+layout_mode = 2
+text = "[5]"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer5" unique_id=986219352]
+layout_mode = 2
+offset_transform_enabled = true
+texture = ExtResource("9_tb146")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1579522978]
 environment = SubResource("Environment_g4v7s")
@@ -110,3 +216,84 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 3.1, 0)
 
 [node name="Marker3D2" type="Marker3D" parent="." unique_id=414127632]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 0.2, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1526514182]
+script = ExtResource("9_uewes")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1421012141]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6313726)
+
+[node name="JoinMenu" type="Control" parent="CanvasLayer" unique_id=2018652978]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ErrorLabel" type="Label" parent="CanvasLayer/JoinMenu" unique_id=1416212192]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -73.5
+offset_top = -23.0
+offset_right = 73.5
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+label_settings = SubResource("LabelSettings_uewes")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/JoinMenu" unique_id=1930312891]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=1701977281]
+layout_mode = 2
+text = "Test drawing game"
+horizontal_alignment = 1
+
+[node name="IPEdit" type="LineEdit" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=1888352676]
+layout_mode = 2
+placeholder_text = "IP address"
+
+[node name="JoinButton" type="Button" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=2085667755]
+layout_mode = 2
+text = "Join"
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=1061631173]
+layout_mode = 2
+
+[node name="HostButton" type="Button" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=352029340]
+layout_mode = 2
+text = "Host game"
+
+[node name="SessionIDLabel" type="Label" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=1237918659]
+layout_mode = 2
+horizontal_alignment = 1
+
+[connection signal="error_raised" from="TubeClient" to="CanvasLayer" method="_on_tube_client_error_raised"]
+[connection signal="session_created" from="TubeClient" to="." method="_on_tube_client_session_created"]
+[connection signal="session_created" from="TubeClient" to="CanvasLayer" method="_on_tube_client_session_created"]
+[connection signal="session_joined" from="TubeClient" to="." method="_on_tube_client_session_joined"]
+[connection signal="session_joined" from="TubeClient" to="CanvasLayer" method="_on_tube_client_session_joined"]
+[connection signal="pressed" from="CanvasLayer/JoinMenu/VBoxContainer/JoinButton" to="CanvasLayer" method="_on_join_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/JoinMenu/VBoxContainer/HostButton" to="CanvasLayer" method="_on_host_button_pressed"]
