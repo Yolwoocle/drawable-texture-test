@@ -1,0 +1,43 @@
+## Area that can recieve damage from hitboxes.
+@icon("./hurtbox.svg")
+extends Area2D
+class_name Hurtbox
+
+## Whether to ignore sibling hitboxes. 
+@export var ignore_sibling_hitboxes := true
+
+
+@export var enabled: bool = true :
+	set(value):
+		enabled = value
+		monitorable = value
+
+## Emitted when entered in collision with a hitbox.
+signal hitbox_entered(area: Hitbox)
+signal hitbox_exited(area: Hitbox)
+
+
+func on_hitbox_entered(hitbox: Hitbox) -> bool:
+	if not is_hittable(hitbox):
+		return false
+	
+	hitbox_entered.emit(hitbox)
+	return true
+
+
+func on_hitbox_exited(hitbox: Hitbox):
+	hitbox_exited.emit(hitbox)
+
+
+func is_hittable(hitbox: Hitbox):
+	if ignore_sibling_hitboxes and hitbox.get_parent() == get_parent():
+		return false
+	return true
+
+
+func disable() -> void:
+	enabled = false
+
+
+func enable() -> void:
+	enabled = true
