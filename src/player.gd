@@ -9,18 +9,31 @@ const JUMP_VELOCITY = 4.5
 
 @onready var camera: Camera3D = $Camera3D
 @onready var camera_raycast: RayCast3D = $Camera3D/CameraRaycast
+@onready var label_3d: Label3D = $Label3D
+@onready var sprite_3d: Sprite3D = $Camera3D/Sprite3D
 
 var interacted_object: Node3D
 
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
+	
+
 func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_DISABLED
-
-
-func enable():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	if is_multiplayer_authority():
+		camera.make_current()
+	else:
+		camera.current = false
 
 
 func _physics_process(delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
+	
+	sprite_3d.hide()
+	label_3d.text = "%s\n(%s)" % [ OSUtil.get_system_username(), multiplayer.get_unique_id()]
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -42,6 +55,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
+	
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		mouse_sensitivity = draw_mouse_sensitivity
 		var hit_object = get_interacted_object()
@@ -67,6 +83,9 @@ func get_interacted_position():
 
 
 func _input(event: InputEvent) -> void:
+	if not is_multiplayer_authority():
+		return
+	
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		camera.rotate_x(-event.relative.y * mouse_sensitivity)

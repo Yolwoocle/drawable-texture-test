@@ -2,15 +2,19 @@ extends Node3D
 
 @onready var label: Label = $HUD/Label
 @onready var tube_client: TubeClient = %TubeClient
-@onready var player: CharacterBody3D = $Player
 @onready var hotbar: HBoxContainer = %Hotbar
 
+const PLAYER = preload("uid://bt05aaf5nwip")
 
 func _ready() -> void:
 	select_hotbar(0)
+	
+	multiplayer.peer_connected.connect(_on_peer_connected)
+	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 
 
 func _on_tube_client_session_created() -> void:
+	spawn_player(multiplayer.get_unique_id())
 	start()
 
 
@@ -18,10 +22,27 @@ func _on_tube_client_session_joined() -> void:
 	start()
 
 
+func _on_peer_connected(id: int) -> void:
+	if multiplayer.is_server():
+		spawn_player(id)
+
+
+func _on_peer_disconnected(id: int) -> void:
+	if multiplayer.is_server():
+		var player_node = get_node_or_null(str(id))
+		if player_node:
+			player_node.queue_free()
+
+
+
+func spawn_player(peer_id: int):
+	var player = PLAYER.instantiate()
+	player.name = str(peer_id)
+	add_child(player)
+
+
 func start():
 	label.text = "Session ID: " + tube_client.session_id + "\nCopied to clipboard"
-	player.process_mode = Node.PROCESS_MODE_INHERIT
-	player.enable()
 	DisplayServer.clipboard_set(tube_client.session_id)
 
 
