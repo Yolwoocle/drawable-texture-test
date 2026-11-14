@@ -117,7 +117,7 @@ func _input(event: InputEvent) -> void:
 			interacted_object = null
 
 
-@rpc("authority", "call_remote")
+@rpc("authority", "call_local")
 func _spawn_ball(spawn_pos: Vector3):
 	var ball = BALL.instantiate()
 	get_parent().add_child(ball, true)
