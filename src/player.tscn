@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b21c5m5qgaj80" path="res://src/player.gd" id="1_lowyb"]
 [ext_resource type="Texture2D" uid="uid://bm3bx85ij3bfg" path="res://assets/face.png" id="2_gmfve"]
+[ext_resource type="Script" uid="uid://dhmskjubm4tfs" path="res://addons/shaker/gameplay/3d/interaction_raycast_3d.gd" id="3_ehvfd"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gmfve"]
 properties/0/path = NodePath(".:position")
@@ -46,6 +47,7 @@ texture = ExtResource("2_gmfve")
 target_position = Vector3(0, 0, -6)
 collision_mask = 2
 collide_with_areas = true
+script = ExtResource("3_ehvfd")
 
 [node name="Label3D" type="Label3D" parent="." unique_id=630984199]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5164397, 0)

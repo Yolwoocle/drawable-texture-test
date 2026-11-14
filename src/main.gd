@@ -41,6 +41,14 @@ func spawn_player(peer_id: int):
 	add_child(player)
 
 
+func join_session(session_id: String) -> void:
+	tube_client.join_session(session_id)
+
+
+func create_session():
+	tube_client.create_session()
+
+
 func start():
 	label.text = "Session ID: " + tube_client.session_id + "\nCopied to clipboard"
 	DisplayServer.clipboard_set(tube_client.session_id)

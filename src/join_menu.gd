@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var ip_edit: LineEdit = $JoinMenu/VBoxContainer/IPEdit
 @onready var session_id_label: Label = $JoinMenu/VBoxContainer/SessionIDLabel
 @onready var error_label: Label = $JoinMenu/ErrorLabel
+@onready var main: Node3D = $".."
 
 
 # Called when the node enters the scene tree for the first time.
@@ -17,12 +18,11 @@ func _process(delta: float) -> void:
 
 
 func _on_join_button_pressed() -> void:
-	tube_client.join_session(ip_edit.text.to_upper())
+	main.join_session(ip_edit.text.to_upper())
 
 
 func _on_host_button_pressed() -> void:
-	tube_client.create_session()
-	session_id_label.text = tube_client.session_id
+	main.create_session()
 
 
 func _on_tube_client_session_created() -> void:

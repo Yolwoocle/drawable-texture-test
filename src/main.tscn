@@ -287,7 +287,7 @@ transform = Transform3D(-0.99619466, 0, 0.087155804, 0, 1, 0, -0.087155804, 0, -
 shape = SubResource("BoxShape3D_g4v7s")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3" unique_id=328077120]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.042032003, 0, 0.48042893)
+transform = Transform3D(0.9954557, 0, 0.09522596, 0, 1, 0, -0.09522596, 0, 0.9954557, 0.042032003, 0, 0.48042896)
 mesh = SubResource("BoxMesh_g4v7s")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1882948130]
@@ -353,10 +353,6 @@ layout_mode = 2
 [node name="HostButton" type="Button" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=352029340]
 layout_mode = 2
 text = "Host game"
-
-[node name="SessionIDLabel" type="Label" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=1237918659]
-layout_mode = 2
-horizontal_alignment = 1
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1704290460]
 

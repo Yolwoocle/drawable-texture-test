@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dce8xqb65vplp"]
 
 [ext_resource type="Script" uid="uid://yb55dovg7rfm" path="res://src/ball.gd" id="1_538ko"]
+[ext_resource type="Script" uid="uid://dw1pbag08kead" path="res://addons/shaker/gameplay/3d/interaction_area_3d.gd" id="2_ov525"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1d71c"]
 properties/0/path = NodePath(".:position")
@@ -22,6 +23,9 @@ material = SubResource("StandardMaterial3D_538ko")
 radius = 0.2
 height = 0.4
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
+radius = 0.20321275
+
 [node name="Ball" type="RigidBody3D" unique_id=594947906]
 physics_interpolation_mode = 1
 collision_layer = 4
@@ -36,3 +40,10 @@ shape = SubResource("SphereShape3D_yf5fn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2054029740]
 mesh = SubResource("SphereMesh_g4v7s")
+
+[node name="InteractionArea3D" type="Area3D" parent="." unique_id=975181771]
+script = ExtResource("2_ov525")
+metadata/_custom_type_script = "uid://dw1pbag08kead"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea3D" unique_id=695253823]
+shape = SubResource("SphereShape3D_g4v7s")
