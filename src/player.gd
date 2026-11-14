@@ -109,7 +109,7 @@ func _input(event: InputEvent) -> void:
 					obj.put_pen()
 			
 			if event.button_index == MOUSE_BUTTON_RIGHT:
-				_spawn_ball.rpc(spawn_marker.global_position)
+				_spawn_ball.rpc_id(1, spawn_marker.global_position)
 			
 		if event.is_released():
 			if interacted_object is DrawableMap:
