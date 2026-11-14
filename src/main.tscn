@@ -12,7 +12,6 @@
 [ext_resource type="Script" uid="uid://cy006uvidc4y" path="res://addons/tube/tube_client.gd" id="10_mgm53"]
 [ext_resource type="Resource" uid="uid://dcu7wrfcxlp0u" path="res://resources/online/tube_context.tres" id="11_uewes"]
 [ext_resource type="PackedScene" uid="uid://dujkendqt6ls1" path="res://src/tube_inspector.tscn" id="13_srxbw"]
-[ext_resource type="PackedScene" uid="uid://dce8xqb65vplp" path="res://src/ball.tscn" id="15_tb146"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
 outline_size = 3
@@ -54,6 +53,10 @@ unique_name_in_owner = true
 script = ExtResource("10_mgm53")
 context = ExtResource("11_uewes")
 metadata/_custom_type_script = "uid://cy006uvidc4y"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1882948130]
+_spawnable_scenes = PackedStringArray("uid://bt05aaf5nwip", "uid://dce8xqb65vplp")
+spawn_path = NodePath("..")
 
 [node name="HUD" type="Control" parent="." unique_id=983727436]
 layout_mode = 3
@@ -188,71 +191,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 3.1, 0)
 [node name="Marker3D2" type="Marker3D" parent="." unique_id=414127632]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 0.2, 0)
 
-[node name="Balls" type="Node3D" parent="." unique_id=1935433547]
-
-[node name="Ball" parent="Balls" unique_id=594947906 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3121464, 2.0564888, -1.444968)
-
-[node name="Ball2" parent="Balls" unique_id=445541090 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8953516, 2.3852432, -0.4598241)
-
-[node name="Ball3" parent="Balls" unique_id=1806858947 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3121464, 2.6292484, -0.3693843)
-
-[node name="Ball4" parent="Balls" unique_id=1800868364 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3121464, 1.2963827, 0.4804839)
-
-[node name="Ball5" parent="Balls" unique_id=790412738 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3121464, 2.1669195, 1.8095007)
-
-[node name="Ball6" parent="Balls" unique_id=863339992 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9992623, 1.9082391, 1.8095007)
-
-[node name="Ball7" parent="Balls" unique_id=1889902164 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7521894, 1.6406138, 1.8095007)
-
-[node name="Ball8" parent="Balls" unique_id=2970771 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9021857, 2.707417, -1.444968)
-
-[node name="Ball9" parent="Balls" unique_id=1959279820 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.485391, 3.0361714, -0.4598241)
-
-[node name="Ball10" parent="Balls" unique_id=1478736352 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9021857, 3.2801766, -0.3693843)
-
-[node name="Ball11" parent="Balls" unique_id=1622600213 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9021857, 1.9473109, 0.4804839)
-
-[node name="Ball12" parent="Balls" unique_id=49964749 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9021857, 2.8178477, 1.8095007)
-
-[node name="Ball13" parent="Balls" unique_id=1916657998 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5893016, 2.5591674, 1.8095007)
-
-[node name="Ball14" parent="Balls" unique_id=1450033591 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3422287, 2.291542, 1.8095007)
-
-[node name="Ball15" parent="Balls" unique_id=1772374345 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9021857, 2.9050765, -0.0058817863)
-
-[node name="Ball16" parent="Balls" unique_id=389559073 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.485391, 3.233831, 0.9792621)
-
-[node name="Ball17" parent="Balls" unique_id=231321147 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9021857, 3.4778361, 1.0697019)
-
-[node name="Ball18" parent="Balls" unique_id=1245697932 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9021857, 2.1449704, 1.9195701)
-
-[node name="Ball19" parent="Balls" unique_id=283800072 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9021857, 3.0155072, 3.248587)
-
-[node name="Ball20" parent="Balls" unique_id=862907233 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5893016, 2.7568269, 3.248587)
-
-[node name="Ball21" parent="Balls" unique_id=1419724231 instance=ExtResource("15_tb146")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3422287, 2.4892015, 3.248587)
-
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1681122558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.376853, 0.2603314, 0)
 
@@ -281,18 +219,13 @@ shape = SubResource("BoxShape3D_g4v7s")
 mesh = SubResource("BoxMesh_g4v7s")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="." unique_id=1469323220]
-transform = Transform3D(-0.99619466, 0, 0.087155804, 0, 1, 0, -0.087155804, 0, -0.99619466, -2.2994294, 0.2603333, 0.39628267)
+transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, -2.2994294, 0.2603333, -0.108507514)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3" unique_id=1523314966]
 shape = SubResource("BoxShape3D_g4v7s")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3" unique_id=328077120]
-transform = Transform3D(0.9954557, 0, 0.09522596, 0, 1, 0, -0.09522596, 0, 0.9954557, 0.042032003, 0, 0.48042896)
 mesh = SubResource("BoxMesh_g4v7s")
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1882948130]
-_spawnable_scenes = PackedStringArray("uid://bt05aaf5nwip")
-spawn_path = NodePath("..")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1526514182]
 script = ExtResource("9_uewes")

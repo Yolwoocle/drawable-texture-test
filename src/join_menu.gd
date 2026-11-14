@@ -2,7 +2,6 @@ extends CanvasLayer
 
 @onready var tube_client: TubeClient = %TubeClient
 @onready var ip_edit: LineEdit = $JoinMenu/VBoxContainer/IPEdit
-@onready var session_id_label: Label = $JoinMenu/VBoxContainer/SessionIDLabel
 @onready var error_label: Label = $JoinMenu/ErrorLabel
 @onready var main: Node3D = $".."
 

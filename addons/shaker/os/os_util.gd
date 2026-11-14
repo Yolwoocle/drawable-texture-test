@@ -23,4 +23,3 @@ static func get_system_username():
 	else:
 		var id = OS.get_unique_id()
 		return "Player_" + id.substr(0, 6)
-		

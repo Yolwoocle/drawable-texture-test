@@ -11,12 +11,15 @@ const JUMP_VELOCITY = 4.5
 @onready var camera_raycast: RayCast3D = $Camera3D/CameraRaycast
 @onready var label_3d: Label3D = $Label3D
 @onready var sprite_3d: Sprite3D = $Camera3D/Sprite3D
+@onready var spawn_marker: Marker3D = $Camera3D/SpawnMarker
+
+const BALL = preload("uid://dce8xqb65vplp")
 
 var interacted_object: Node3D
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
-	
+
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -104,7 +107,18 @@ func _input(event: InputEvent) -> void:
 				interacted_object = obj
 				if obj is DrawableMap:
 					obj.put_pen()
+			
+			if event.button_index == MOUSE_BUTTON_RIGHT:
+				_spawn_ball.rpc(spawn_marker.global_position)
+			
 		if event.is_released():
 			if interacted_object is DrawableMap:
 				interacted_object.release_pen()
 			interacted_object = null
+
+
+@rpc("authority", "call_remote")
+func _spawn_ball(spawn_pos: Vector3):
+	var ball = BALL.instantiate()
+	get_parent().add_child(ball, true)
+	ball.global_position = spawn_pos
