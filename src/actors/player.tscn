@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bt05aaf5nwip"]
+
+[ext_resource type="Script" uid="uid://b21c5m5qgaj80" path="res://src/actors/player.gd" id="1_foe4e"]
+[ext_resource type="Texture2D" uid="uid://bm3bx85ij3bfg" path="res://assets/face.png" id="2_xk21n"]
+[ext_resource type="Script" uid="uid://dhmskjubm4tfs" path="res://addons/shaker/gameplay/3d/interaction_raycast_3d.gd" id="3_1oxso"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gmfve"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Label3D:text")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Camera3D:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1689985493]
+script = ExtResource("1_foe4e")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=800178854]
+replication_config = SubResource("SceneReplicationConfig_gmfve")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=474508133]
+shape = SubResource("CapsuleShape3D_g4v7s")
+debug_color = Color(1, 0.9166666, 0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1687114378]
+mesh = SubResource("CapsuleMesh_g4v7s")
+
+[node name="HandPosition" type="Marker3D" parent="." unique_id=68453968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.111747205, -1.2020259)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=780948810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50453544, 0)
+current = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Camera3D" unique_id=1418116726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.006882429, -0.5424875)
+texture = ExtResource("2_xk21n")
+
+[node name="CameraRaycast" type="RayCast3D" parent="Camera3D" unique_id=754008345]
+target_position = Vector3(0, 0, -6)
+collision_mask = 3
+collide_with_areas = true
+script = ExtResource("3_1oxso")
+
+[node name="SpawnMarker" type="Marker3D" parent="Camera3D" unique_id=2095966257]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.2020259)
+
+[node name="Label3D" type="Label3D" parent="." unique_id=630984199]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5164397, 0)
+billboard = 1
+no_depth_test = true
+text = "qdsqsdqsddsq"

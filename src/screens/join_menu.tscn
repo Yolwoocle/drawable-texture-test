@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://c6vw2dgnxgw7f"]
 
-[ext_resource type="Script" uid="uid://dnqx4xtfydlro" path="res://src/join_menu.gd" id="1_y3bqe"]
+[ext_resource type="Script" uid="uid://dnqx4xtfydlro" path="res://src/screens/join_menu.gd" id="1_y3bqe"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
+font_color = Color(0.9999822, 0.2512122, 0.19380862, 1)
 
 [node name="JoinMenu" type="Control" unique_id=2018652978]
 layout_mode = 3
@@ -30,17 +33,31 @@ layout_mode = 2
 text = "Test drawing game"
 horizontal_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer" unique_id=1888352676]
+[node name="IDEdit" type="LineEdit" parent="VBoxContainer" unique_id=1888352676]
 layout_mode = 2
 placeholder_text = "IP address"
 
-[node name="Button" type="Button" parent="VBoxContainer" unique_id=2085667755]
+[node name="JoinButton" type="Button" parent="VBoxContainer" unique_id=2085667755]
 layout_mode = 2
 text = "Join"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=1061631173]
 layout_mode = 2
 
-[node name="Button2" type="Button" parent="VBoxContainer" unique_id=352029340]
+[node name="HostButton" type="Button" parent="VBoxContainer" unique_id=352029340]
 layout_mode = 2
 text = "Host game"
+
+[node name="ErrorLabel" type="Label" parent="." unique_id=2067494589]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_g4v7s")

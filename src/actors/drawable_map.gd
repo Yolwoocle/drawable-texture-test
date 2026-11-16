@@ -1,5 +1,5 @@
 class_name DrawableMap
-extends Area3D
+extends Node3D
 
 var drawable_texture: DrawableTexture2D
 
@@ -10,22 +10,23 @@ var drawable_texture: DrawableTexture2D
 @export var collision_margin: float = 1.1
 
 @onready var _mesh_inst: MeshInstance3D = $MeshInstance3D
-@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+@onready var interaction_area: InteractionArea3D = $InteractionArea3D
+@onready var collision_shape_3d: CollisionShape3D = $InteractionArea3D/CollisionShape3D
 @onready var main: Node3D = $".."
 
 var _last_draw_pos: Vector2i
 var _is_drawing: bool = false
 
-var draw_color: Color = Color.BLACK
 var is_eraser: bool = false
 
 var _mesh: PlaneMesh
 
+var _interact_raycast: InteractionRayCast3D
+var _interact_marker: Marker
+
 var eraser_material: BlitMaterial
 
 func _ready() -> void:
-	input_event.connect(_on_input_event)
-	
 	drawable_texture = DrawableTexture2D.new()
 	drawable_texture.setup(background_texture.get_width(), background_texture.get_height(), DrawableTexture2D.DRAWABLE_FORMAT_RGBA8, Color.TRANSPARENT)
 	
@@ -40,32 +41,14 @@ func _ready() -> void:
 	
 	eraser_material = BlitMaterial.new()
 	eraser_material.blend_mode = BlitMaterial.BLEND_MODE_SUB
+	
+	interaction_area.interacted.connect(_on_interact)
+	interaction_area.interaction_ended.connect(_on_interact_end)
 
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.is_pressed():
-		var key = (event as InputEventKey).keycode
-		match key:
-			Key.KEY_1:
-				draw_color = Color.BLACK
-				is_eraser = false
-				main.select_hotbar(0)
-			Key.KEY_2:
-				draw_color = Color.RED
-				is_eraser = false
-				main.select_hotbar(1)
-			Key.KEY_3:
-				draw_color = Color.BLUE
-				is_eraser = false
-				main.select_hotbar(2)
-			Key.KEY_4:
-				draw_color = Color.GREEN
-				is_eraser = false
-				main.select_hotbar(3)
-			Key.KEY_5:
-				draw_color = Color.WHITE
-				is_eraser = true
-				main.select_hotbar(4)
+func _process(delta: float) -> void:
+	if _is_drawing and _interact_raycast:
+		interact_at(_interact_raycast.target_point)
 
 
 @rpc("any_peer", "call_local")
@@ -86,6 +69,7 @@ func interact_at(event_position: Vector3):
 	var transf_pos = (transform.affine_inverse() * event_position)
 	var uv_pos = (Vector2(transf_pos.x, transf_pos.z) / size) + Vector2(0.5, 0.5)
 	var tex_pos = uv_pos * background_texture.get_size()
+	var draw_color = _interact_marker.color
 	
 	if _last_draw_pos == Vector2i.MAX:
 		_last_draw_pos = tex_pos
@@ -102,5 +86,19 @@ func put_pen():
 	_last_draw_pos = Vector2i.MAX
 
 
-func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int):
-	pass
+func _on_interact(raycast: InteractionRayCast3D, pos: Vector3):
+	if raycast.owner is not Player:
+		return
+	var player = (raycast.owner as Player)
+	var object_used = player.picked_up_object
+	if object_used is not Marker:
+		return
+	
+	put_pen()
+	_interact_raycast = raycast
+	_interact_marker = object_used
+
+
+func _on_interact_end(raycast: InteractionRayCast3D):
+	release_pen()
+	_interact_raycast = null

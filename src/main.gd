@@ -1,26 +1,38 @@
 extends Node3D
 
 @onready var label: Label = $HUD/Label
-@onready var tube_client: TubeClient = %TubeClient
 @onready var hotbar: HBoxContainer = %Hotbar
+@onready var label_right: Label = $HUD/LabelRight
+@onready var actors: Node3D = $Actors
 
 const PLAYER = preload("uid://bt05aaf5nwip")
-
 const DEBUG_SESSION_ID_FILE = "user://debug_session_id.txt"
 
+var current_player: Player
+
+func _enter_tree() -> void:
+	pass
+
+
 func _ready() -> void:
+	start()
+	
 	select_hotbar(0)
 	
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	
-	var args = OS.get_cmdline_args()
-	if args.has("--server"):
-		DisplayServer.window_set_title("Host")
-		tube_client.create_session()
-	elif args.has("--client"):
-		DisplayServer.window_set_title("Client")
-		_delay_join_debug_server()
+	if is_multiplayer_authority():
+		_on_tube_client_session_created()
+
+
+func _process(delta: float) -> void:
+	current_player = actors.get_node_or_null(str(multiplayer.get_unique_id()))
+	
+	label_right.text = ""
+	if current_player:
+		label_right.text += "picked_up_object: %s\n" % [current_player.picked_up_object]
+	label_right.text += "\n" % []
 
 
 func _on_tube_client_session_created() -> void:
@@ -30,21 +42,7 @@ func _on_tube_client_session_created() -> void:
 	var args = OS.get_cmdline_args()
 	if args.has("--server"):
 		var file = FileAccess.open(DEBUG_SESSION_ID_FILE, FileAccess.WRITE)
-		file.store_string(tube_client.session_id)
-
-
-func _delay_join_debug_server():
-	await get_tree().create_timer(1.5).timeout
-	
-	if FileAccess.file_exists(DEBUG_SESSION_ID_FILE):
-		var file = FileAccess.open(DEBUG_SESSION_ID_FILE, FileAccess.READ)
-		var session_id = file.get_as_text()
-		
-		tube_client.join_session(session_id)
-
-
-func _on_tube_client_session_joined() -> void:
-	start()
+		file.store_string(Global.tube_client.session_id)
 
 
 func _on_peer_connected(id: int) -> void:
@@ -62,20 +60,20 @@ func _on_peer_disconnected(id: int) -> void:
 func spawn_player(peer_id: int):
 	var player = PLAYER.instantiate()
 	player.name = str(peer_id)
-	add_child(player, true)
-
-
-func join_session(session_id: String) -> void:
-	tube_client.join_session(session_id)
-
-
-func create_session():
-	tube_client.create_session()
+	
+	actors.add_child(player, true)
+	
+	if peer_id == multiplayer.get_unique_id():
+		current_player = player
 
 
 func start():
-	label.text = "Session ID: " + tube_client.session_id + "\nCopied to clipboard"
-	DisplayServer.clipboard_set(tube_client.session_id)
+	label.text = "Session ID: " + Global.tube_client.session_id + "\n"
+	if multiplayer.is_server():
+		DisplayServer.clipboard_set(Global.tube_client.session_id)
+		label.text += "Copied to clipboard\n"
+	label.text += "\n"
+	label.text += "Username: %s (%s)\n" % [OSUtil.get_system_username(), multiplayer.get_unique_id()]
 
 
 func select_hotbar(index: int):

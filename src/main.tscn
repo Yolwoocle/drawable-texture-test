@@ -7,11 +7,14 @@
 [ext_resource type="Texture2D" uid="uid://dvxaid42x5ogg" path="res://assets/marker_blue.png" id="7_tb146"]
 [ext_resource type="Texture2D" uid="uid://bp2joh3hvpla0" path="res://assets/marker_green.png" id="8_e7lu8"]
 [ext_resource type="Texture2D" uid="uid://m4enrwk74rmn" path="res://assets/brush.png" id="9_tb146"]
-[ext_resource type="Script" uid="uid://dnqx4xtfydlro" path="res://src/join_menu.gd" id="9_uewes"]
-[ext_resource type="PackedScene" uid="uid://b3i2lo314576y" path="res://src/drawable_map.tscn" id="10_kqbth"]
-[ext_resource type="Script" uid="uid://cy006uvidc4y" path="res://addons/tube/tube_client.gd" id="10_mgm53"]
-[ext_resource type="Resource" uid="uid://dcu7wrfcxlp0u" path="res://resources/online/tube_context.tres" id="11_uewes"]
+[ext_resource type="PackedScene" uid="uid://b3i2lo314576y" path="res://src/actors/drawable_map.tscn" id="10_kqbth"]
+[ext_resource type="PackedScene" uid="uid://c4vwphv1r51oy" path="res://src/actors/marker.tscn" id="10_srxbw"]
+[ext_resource type="PackedScene" uid="uid://cs8xyd0piode7" path="res://src/actors/ball.tscn" id="11_d3u4l"]
 [ext_resource type="PackedScene" uid="uid://dujkendqt6ls1" path="res://src/tube_inspector.tscn" id="13_srxbw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kqbth"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
 outline_size = 3
@@ -42,21 +45,12 @@ size = Vector3(1, 1, 10)
 [sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
 size = Vector3(1, 1, 10)
 
-[sub_resource type="LabelSettings" id="LabelSettings_uewes"]
-font_color = Color(1, 0.38, 0.38, 1)
-
 [node name="Main" type="Node3D" unique_id=1407832290]
 script = ExtResource("1_fyndt")
 
-[node name="TubeClient" type="Node" parent="." unique_id=745561958]
-unique_name_in_owner = true
-script = ExtResource("10_mgm53")
-context = ExtResource("11_uewes")
-metadata/_custom_type_script = "uid://cy006uvidc4y"
-
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1882948130]
-_spawnable_scenes = PackedStringArray("uid://bt05aaf5nwip", "uid://dce8xqb65vplp")
-spawn_path = NodePath("..")
+_spawnable_scenes = PackedStringArray("uid://bt05aaf5nwip", "uid://cs8xyd0piode7")
+spawn_path = NodePath("../Actors")
 
 [node name="HUD" type="Control" parent="." unique_id=983727436]
 layout_mode = 3
@@ -87,6 +81,18 @@ texture = ExtResource("2_5mrjc")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_kqbth")
+
+[node name="LabelRight" type="Label" parent="HUD" unique_id=5285324]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+label_settings = SubResource("LabelSettings_kqbth")
+horizontal_alignment = 2
 
 [node name="Hotbar" type="HBoxContainer" parent="HUD" unique_id=684003151]
 unique_name_in_owner = true
@@ -171,6 +177,42 @@ texture = ExtResource("9_tb146")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1579522978]
 environment = SubResource("Environment_g4v7s")
 
+[node name="Actors" type="Node3D" parent="." unique_id=1752580695]
+
+[node name="Marker" parent="Actors" unique_id=594947906 instance=ExtResource("10_srxbw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, -0.7495475)
+color = Color(0.19550002, 0.27185845, 0.85, 1)
+
+[node name="Marker2" parent="Actors" unique_id=1026498888 instance=ExtResource("10_srxbw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, -0.27159023)
+color = Color(0.080000035, 0.48, 0, 1)
+
+[node name="Marker3" parent="Actors" unique_id=1580191934 instance=ExtResource("10_srxbw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, 0.13826835)
+color = Color(0, 0, 0, 1)
+
+[node name="Marker4" parent="Actors" unique_id=1679657396 instance=ExtResource("10_srxbw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, 0.55009556)
+color = Color(0.98, 0, 0.09799991, 1)
+
+[node name="Pickupable" parent="Actors" unique_id=799627446 instance=ExtResource("11_d3u4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 0)
+
+[node name="Pickupable2" parent="Actors" unique_id=834708471 instance=ExtResource("11_d3u4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 0.6341064)
+
+[node name="Pickupable3" parent="Actors" unique_id=564410951 instance=ExtResource("11_d3u4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 1.1804368)
+
+[node name="Pickupable4" parent="Actors" unique_id=968388247 instance=ExtResource("11_d3u4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 2.0830367)
+
+[node name="Pickupable5" parent="Actors" unique_id=401007678 instance=ExtResource("11_d3u4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 2.6347477)
+
+[node name="Pickupable6" parent="Actors" unique_id=765669265 instance=ExtResource("11_d3u4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 3.3165815)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=391488667]
 transform = Transform3D(0.9510047, 7.085537e-09, -0.3091765, 0.08993775, 0.95675516, 0.27664202, 0.29580623, -0.2908945, 0.9098786, -3.02632, 2.592535, 6.6203403)
 
@@ -183,7 +225,7 @@ shape = SubResource("WorldBoundaryShape3D_g4v7s")
 mesh = SubResource("QuadMesh_g4v7s")
 
 [node name="DrawableMap" parent="." unique_id=1478694125 instance=ExtResource("10_kqbth")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.1186209, 1.7131662, -3.5556607)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.1186209, 2.3395693, -4.905227)
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=539703407]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 3.1, 0)
@@ -227,66 +269,6 @@ shape = SubResource("BoxShape3D_g4v7s")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3" unique_id=328077120]
 mesh = SubResource("BoxMesh_g4v7s")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1526514182]
-script = ExtResource("9_uewes")
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1421012141]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.6313726)
-
-[node name="JoinMenu" type="Control" parent="CanvasLayer" unique_id=2018652978]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ErrorLabel" type="Label" parent="CanvasLayer/JoinMenu" unique_id=1416212192]
-layout_mode = 1
-offset_right = 147.0
-offset_bottom = 23.0
-size_flags_vertical = 8
-label_settings = SubResource("LabelSettings_uewes")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/JoinMenu" unique_id=1930312891]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -73.5
-offset_top = -81.5
-offset_right = 73.5
-offset_bottom = 81.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=1701977281]
-layout_mode = 2
-text = "Test drawing game"
-horizontal_alignment = 1
-
-[node name="IPEdit" type="LineEdit" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=1888352676]
-layout_mode = 2
-placeholder_text = "Room code"
-
-[node name="JoinButton" type="Button" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=2085667755]
-layout_mode = 2
-text = "Join"
-
-[node name="HSeparator" type="HSeparator" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=1061631173]
-layout_mode = 2
-
-[node name="HostButton" type="Button" parent="CanvasLayer/JoinMenu/VBoxContainer" unique_id=352029340]
-layout_mode = 2
-text = "Host game"
-
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1704290460]
 
 [node name="TubeInspector" parent="CanvasLayer2" unique_id=404385245 instance=ExtResource("13_srxbw")]
@@ -304,11 +286,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5778656, 5.3499117)
 visible = false
 billboard = 1
 text = "gay sex"
-
-[connection signal="error_raised" from="TubeClient" to="CanvasLayer" method="_on_tube_client_error_raised"]
-[connection signal="session_created" from="TubeClient" to="." method="_on_tube_client_session_created"]
-[connection signal="session_created" from="TubeClient" to="CanvasLayer" method="_on_tube_client_session_created"]
-[connection signal="session_joined" from="TubeClient" to="." method="_on_tube_client_session_joined"]
-[connection signal="session_joined" from="TubeClient" to="CanvasLayer" method="_on_tube_client_session_joined"]
-[connection signal="pressed" from="CanvasLayer/JoinMenu/VBoxContainer/JoinButton" to="CanvasLayer" method="_on_join_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/JoinMenu/VBoxContainer/HostButton" to="CanvasLayer" method="_on_host_button_pressed"]

@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dce8xqb65vplp"]
+
+[ext_resource type="Script" uid="uid://yb55dovg7rfm" path="res://src/actors/pickupable.gd" id="1_cyh78"]
+[ext_resource type="Script" uid="uid://cuujpp6nbpmx3" path="res://addons/shaker/multiplayer/3d/multiplayer_rigidbody_3d_synchronizer.gd" id="2_eulwr"]
+[ext_resource type="Script" uid="uid://dw1pbag08kead" path="res://addons/shaker/gameplay/3d/interaction_area_3d.gd" id="3_s7jr2"]
+[ext_resource type="Script" uid="uid://drpttt3optl3r" path="res://addons/shaker/state/state_machine.gd" id="4_3g7ym"]
+[ext_resource type="Script" uid="uid://b0owhyixnvc1e" path="res://src/actors/state_normal.gd" id="5_gejst"]
+[ext_resource type="Script" uid="uid://by4b31uwedjko" path="res://src/actors/state_picked_up.gd" id="6_kqc3g"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1d71c"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_u2t8m"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
+radius = 0.20321275
+
+[node name="Pickupable" type="RigidBody3D" unique_id=594947906]
+physics_interpolation_mode = 1
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_cyh78")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1282182774]
+replication_config = SubResource("SceneReplicationConfig_1d71c")
+
+[node name="MultiplayerRigidbody3DSyncronizer" type="MultiplayerSynchronizer" parent="." unique_id=594488318]
+replication_config = SubResource("SceneReplicationConfig_u2t8m")
+script = ExtResource("2_eulwr")
+metadata/_custom_type_script = "uid://cuujpp6nbpmx3"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1837587082]
+
+[node name="InteractionArea3D" type="Area3D" parent="." unique_id=975181771]
+unique_name_in_owner = true
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("3_s7jr2")
+metadata/_custom_type_script = "uid://dw1pbag08kead"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea3D" unique_id=695253823]
+shape = SubResource("SphereShape3D_g4v7s")
+
+[node name="Visuals" type="Node3D" parent="." unique_id=612910898]
+
+[node name="StateMachine" type="Node" parent="." unique_id=131307649]
+script = ExtResource("4_3g7ym")
+default_state = &"Normal"
+metadata/_custom_type_script = "uid://drpttt3optl3r"
+
+[node name="Normal" type="Node" parent="StateMachine" unique_id=742992902]
+script = ExtResource("5_gejst")
+metadata/_custom_type_script = "uid://bpqjpkhit0v31"
+
+[node name="PickedUp" type="Node" parent="StateMachine" unique_id=695016337]
+script = ExtResource("6_kqc3g")
+metadata/_custom_type_script = "uid://bpqjpkhit0v31"
+
+[node name="DebugLabel3D" type="Label3D" parent="." unique_id=1925266845]

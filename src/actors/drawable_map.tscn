@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://b3i2lo314576y"]
 
-[ext_resource type="Script" uid="uid://lbqipv2j8mju" path="res://src/drawable_map.gd" id="1_h7gqa"]
+[ext_resource type="Script" uid="uid://lbqipv2j8mju" path="res://src/actors/drawable_map.gd" id="1_h7gqa"]
 [ext_resource type="Texture2D" uid="uid://d1khv5h33ahbt" path="res://assets/empty_canvas.png" id="2_b1r3h"]
 [ext_resource type="Texture2D" uid="uid://b6ur0u55orfc3" path="res://assets/pen_shape.png" id="3_2wg52"]
 [ext_resource type="Texture2D" uid="uid://bujkxul7vcco7" path="res://assets/eraser_shape.png" id="4_2sjtc"]
+[ext_resource type="Script" uid="uid://dw1pbag08kead" path="res://addons/shaker/gameplay/3d/interaction_area_3d.gd" id="5_3wrhl"]
 [ext_resource type="Shader" uid="uid://dree6qjuw2kwy" path="res://src/texutre_rect.gdshader" id="5_tpkxe"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
@@ -18,17 +19,21 @@ shader_parameter/bg_texture = ExtResource("2_b1r3h")
 material = SubResource("ShaderMaterial_1bvp3")
 size = Vector2(3, 3)
 
-[node name="DrawableMap" type="Area3D" unique_id=1478694125]
+[node name="DrawableMap" type="Node3D" unique_id=918664201]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-collision_layer = 2
-collision_mask = 2
 script = ExtResource("1_h7gqa")
 size = Vector2(3, 3)
 background_texture = ExtResource("2_b1r3h")
 pen_texture = ExtResource("3_2wg52")
 eraser_texture = ExtResource("4_2sjtc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1801685890]
+[node name="InteractionArea3D" type="Area3D" parent="." unique_id=1873500853]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("5_3wrhl")
+metadata/_custom_type_script = "uid://dw1pbag08kead"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea3D" unique_id=1801685890]
 shape = SubResource("BoxShape3D_yf5fn")
 debug_color = Color(0, 0.85000014, 1, 0.41960785)
 
