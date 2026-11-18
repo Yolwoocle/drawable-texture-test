@@ -1,7 +1,6 @@
 extends Node3D
 
 @onready var label: Label = $HUD/Label
-@onready var hotbar: HBoxContainer = %Hotbar
 @onready var label_right: Label = $HUD/LabelRight
 @onready var actors: Node3D = $Actors
 
@@ -16,8 +15,6 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	start()
-	
-	select_hotbar(0)
 	
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
@@ -74,12 +71,3 @@ func start():
 		label.text += "Copied to clipboard\n"
 	label.text += "\n"
 	label.text += "Username: %s (%s)\n" % [OSUtil.get_system_username(), multiplayer.get_unique_id()]
-
-
-func select_hotbar(index: int):
-	for i in hotbar.get_child_count():
-		var texture_rect: TextureRect = hotbar.get_child(i).get_node("TextureRect")
-		if i == index:
-			texture_rect.offset_transform_position_ratio.y = 0.0
-		else:
-			texture_rect.offset_transform_position_ratio.y = 0.3

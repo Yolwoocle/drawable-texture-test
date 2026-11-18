@@ -14,7 +14,7 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("Label3D:text")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("Camera3D:rotation")
+properties/3/path = NodePath("Head:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
@@ -38,21 +38,23 @@ mesh = SubResource("CapsuleMesh_g4v7s")
 [node name="HandPosition" type="Marker3D" parent="." unique_id=68453968]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.111747205, -1.2020259)
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=780948810]
+[node name="Head" type="Node3D" parent="." unique_id=107974971]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50453544, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=780948810]
 current = true
 
-[node name="Sprite3D" type="Sprite3D" parent="Camera3D" unique_id=1418116726]
+[node name="Sprite3D" type="Sprite3D" parent="Head" unique_id=1418116726]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.006882429, -0.5424875)
 texture = ExtResource("2_xk21n")
 
-[node name="CameraRaycast" type="RayCast3D" parent="Camera3D" unique_id=754008345]
+[node name="CameraRaycast" type="RayCast3D" parent="Head" unique_id=754008345]
 target_position = Vector3(0, 0, -6)
 collision_mask = 3
 collide_with_areas = true
 script = ExtResource("3_1oxso")
 
-[node name="SpawnMarker" type="Marker3D" parent="Camera3D" unique_id=2095966257]
+[node name="SpawnMarker" type="Marker3D" parent="Head" unique_id=2095966257]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.2020259)
 
 [node name="Label3D" type="Label3D" parent="." unique_id=630984199]

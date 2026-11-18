@@ -24,6 +24,7 @@ shader_parameter/color = Color(0.2274938, 0.4937638, 1, 1)
 [node name="Marker" unique_id=594947906 instance=ExtResource("1_8gte7")]
 script = ExtResource("2_gvpc0")
 color = Color(0.2274938, 0.4937638, 1, 1)
+is_eraser = null
 
 [node name="CollisionShape3D" parent="." index="2" unique_id=1837587082]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.03060913, -1.3379687e-09, 0)

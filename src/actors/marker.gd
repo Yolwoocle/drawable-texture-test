@@ -3,6 +3,7 @@ class_name Marker
 extends Pickupable
 
 @export var color: Color = Color.BLACK: set = _set_color
+@export var is_eraser: bool = false
 
 @onready var cylinder: MeshInstance3D = $Visuals/marker/Cylinder
 

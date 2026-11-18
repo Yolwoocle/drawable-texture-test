@@ -1,23 +1,14 @@
 [gd_scene format=3 uid="uid://c8hla63rn7ie4"]
 
-[ext_resource type="Script" uid="uid://dnieoilmd8kvh" path="res://src/main.gd" id="1_fyndt"]
-[ext_resource type="Texture2D" uid="uid://car7h1dwbv2di" path="res://assets/cursor.png" id="2_5mrjc"]
-[ext_resource type="Texture2D" uid="uid://o723aibrfgpt" path="res://assets/marker_black.png" id="5_kqbth"]
-[ext_resource type="Texture2D" uid="uid://cvhynunyevo1l" path="res://assets/marker_red.png" id="6_mlv6i"]
-[ext_resource type="Texture2D" uid="uid://dvxaid42x5ogg" path="res://assets/marker_blue.png" id="7_tb146"]
-[ext_resource type="Texture2D" uid="uid://bp2joh3hvpla0" path="res://assets/marker_green.png" id="8_e7lu8"]
-[ext_resource type="Texture2D" uid="uid://m4enrwk74rmn" path="res://assets/brush.png" id="9_tb146"]
-[ext_resource type="PackedScene" uid="uid://b3i2lo314576y" path="res://src/actors/drawable_map.tscn" id="10_kqbth"]
-[ext_resource type="PackedScene" uid="uid://c4vwphv1r51oy" path="res://src/actors/marker.tscn" id="10_srxbw"]
-[ext_resource type="PackedScene" uid="uid://cs8xyd0piode7" path="res://src/actors/ball.tscn" id="11_d3u4l"]
-[ext_resource type="PackedScene" uid="uid://dujkendqt6ls1" path="res://src/tube_inspector.tscn" id="13_srxbw"]
+[ext_resource type="Script" uid="uid://dnieoilmd8kvh" path="res://src/level/level.gd" id="1_jq0je"]
+[ext_resource type="Texture2D" uid="uid://car7h1dwbv2di" path="res://assets/cursor.png" id="2_pothl"]
+[ext_resource type="PackedScene" uid="uid://c4vwphv1r51oy" path="res://src/actors/marker.tscn" id="3_7i26j"]
+[ext_resource type="PackedScene" uid="uid://cs8xyd0piode7" path="res://src/actors/ball.tscn" id="4_wc5yb"]
+[ext_resource type="PackedScene" uid="uid://b3i2lo314576y" path="res://src/actors/drawable_map.tscn" id="5_ssy8p"]
+[ext_resource type="PackedScene" uid="uid://dujkendqt6ls1" path="res://src/tube_inspector.tscn" id="6_lmnmg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kqbth"]
 outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
-outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rlaii"]
@@ -45,8 +36,8 @@ size = Vector3(1, 1, 10)
 [sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
 size = Vector3(1, 1, 10)
 
-[node name="Main" type="Node3D" unique_id=1407832290]
-script = ExtResource("1_fyndt")
+[node name="Level" type="Node3D" unique_id=1407832290]
+script = ExtResource("1_jq0je")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1882948130]
 _spawnable_scenes = PackedStringArray("uid://bt05aaf5nwip", "uid://cs8xyd0piode7")
@@ -75,7 +66,7 @@ grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
 offset_transform_scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_5mrjc")
+texture = ExtResource("2_pothl")
 
 [node name="Label" type="Label" parent="HUD" unique_id=2142290803]
 layout_mode = 0
@@ -94,123 +85,52 @@ grow_horizontal = 0
 label_settings = SubResource("LabelSettings_kqbth")
 horizontal_alignment = 2
 
-[node name="Hotbar" type="HBoxContainer" parent="HUD" unique_id=684003151]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 40.0
-grow_vertical = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Hotbar" unique_id=760063791]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer" unique_id=568383796]
-layout_mode = 2
-text = "[1]"
-label_settings = SubResource("LabelSettings_g4v7s")
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer" unique_id=803837940]
-layout_mode = 2
-offset_transform_enabled = true
-texture = ExtResource("5_kqbth")
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="HUD/Hotbar" unique_id=1284214651]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer2" unique_id=1662701905]
-layout_mode = 2
-text = "[2]"
-label_settings = SubResource("LabelSettings_g4v7s")
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer2" unique_id=681067212]
-layout_mode = 2
-offset_transform_enabled = true
-texture = ExtResource("6_mlv6i")
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="HUD/Hotbar" unique_id=1847766312]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer3" unique_id=639830951]
-layout_mode = 2
-text = "[3]"
-label_settings = SubResource("LabelSettings_g4v7s")
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer3" unique_id=2035765413]
-layout_mode = 2
-offset_transform_enabled = true
-texture = ExtResource("7_tb146")
-
-[node name="VBoxContainer4" type="VBoxContainer" parent="HUD/Hotbar" unique_id=85254298]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer4" unique_id=328617314]
-layout_mode = 2
-text = "[4]"
-label_settings = SubResource("LabelSettings_g4v7s")
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer4" unique_id=755357585]
-layout_mode = 2
-offset_transform_enabled = true
-texture = ExtResource("8_e7lu8")
-
-[node name="VBoxContainer5" type="VBoxContainer" parent="HUD/Hotbar" unique_id=1843330199]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HUD/Hotbar/VBoxContainer5" unique_id=1448339306]
-layout_mode = 2
-text = "[5]"
-label_settings = SubResource("LabelSettings_g4v7s")
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="HUD/Hotbar/VBoxContainer5" unique_id=986219352]
-layout_mode = 2
-offset_transform_enabled = true
-texture = ExtResource("9_tb146")
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1579522978]
 environment = SubResource("Environment_g4v7s")
 
 [node name="Actors" type="Node3D" parent="." unique_id=1752580695]
 
-[node name="Marker" parent="Actors" unique_id=594947906 instance=ExtResource("10_srxbw")]
+[node name="Marker" parent="Actors" unique_id=594947906 instance=ExtResource("3_7i26j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, -0.7495475)
 color = Color(0.19550002, 0.27185845, 0.85, 1)
+is_eraser = false
 
-[node name="Marker2" parent="Actors" unique_id=1026498888 instance=ExtResource("10_srxbw")]
+[node name="Marker2" parent="Actors" unique_id=1026498888 instance=ExtResource("3_7i26j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, -0.27159023)
 color = Color(0.080000035, 0.48, 0, 1)
+is_eraser = false
 
-[node name="Marker3" parent="Actors" unique_id=1580191934 instance=ExtResource("10_srxbw")]
+[node name="Marker3" parent="Actors" unique_id=1580191934 instance=ExtResource("3_7i26j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, 0.13826835)
 color = Color(0, 0, 0, 1)
+is_eraser = false
 
-[node name="Marker4" parent="Actors" unique_id=1679657396 instance=ExtResource("10_srxbw")]
+[node name="Marker4" parent="Actors" unique_id=1679657396 instance=ExtResource("3_7i26j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, 0.55009556)
 color = Color(0.98, 0, 0.09799991, 1)
+is_eraser = false
 
-[node name="Pickupable" parent="Actors" unique_id=799627446 instance=ExtResource("11_d3u4l")]
+[node name="Marker5" parent="Actors" unique_id=1649898260 instance=ExtResource("3_7i26j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, 1.0017772)
+color = Color(1, 1, 1, 1)
+is_eraser = true
+
+[node name="Pickupable" parent="Actors" unique_id=799627446 instance=ExtResource("4_wc5yb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 0)
 
-[node name="Pickupable2" parent="Actors" unique_id=834708471 instance=ExtResource("11_d3u4l")]
+[node name="Pickupable2" parent="Actors" unique_id=834708471 instance=ExtResource("4_wc5yb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 0.6341064)
 
-[node name="Pickupable3" parent="Actors" unique_id=564410951 instance=ExtResource("11_d3u4l")]
+[node name="Pickupable3" parent="Actors" unique_id=564410951 instance=ExtResource("4_wc5yb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 1.1804368)
 
-[node name="Pickupable4" parent="Actors" unique_id=968388247 instance=ExtResource("11_d3u4l")]
+[node name="Pickupable4" parent="Actors" unique_id=968388247 instance=ExtResource("4_wc5yb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 2.0830367)
 
-[node name="Pickupable5" parent="Actors" unique_id=401007678 instance=ExtResource("11_d3u4l")]
+[node name="Pickupable5" parent="Actors" unique_id=401007678 instance=ExtResource("4_wc5yb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 2.6347477)
 
-[node name="Pickupable6" parent="Actors" unique_id=765669265 instance=ExtResource("11_d3u4l")]
+[node name="Pickupable6" parent="Actors" unique_id=765669265 instance=ExtResource("4_wc5yb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 3.3165815)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=391488667]
@@ -224,7 +144,7 @@ shape = SubResource("WorldBoundaryShape3D_g4v7s")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1870469045]
 mesh = SubResource("QuadMesh_g4v7s")
 
-[node name="DrawableMap" parent="." unique_id=1478694125 instance=ExtResource("10_kqbth")]
+[node name="DrawableMap" parent="." unique_id=1478694125 instance=ExtResource("5_ssy8p")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.1186209, 2.3395693, -4.905227)
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=539703407]
@@ -271,7 +191,7 @@ mesh = SubResource("BoxMesh_g4v7s")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1704290460]
 
-[node name="TubeInspector" parent="CanvasLayer2" unique_id=404385245 instance=ExtResource("13_srxbw")]
+[node name="TubeInspector" parent="CanvasLayer2" unique_id=404385245 instance=ExtResource("6_lmnmg")]
 visible = false
 anchors_preset = 1
 anchor_left = 1.0

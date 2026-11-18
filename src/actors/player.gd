@@ -8,11 +8,12 @@ var mouse_sensitivity = normal_mouse_sensitivity
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-@onready var camera: Camera3D = $Camera3D
-@onready var camera_raycast: InteractionRayCast3D = $Camera3D/CameraRaycast
+@onready var head: Node3D = $Head
+@onready var camera: Camera3D = $Head/Camera3D
+@onready var camera_raycast: InteractionRayCast3D = $Head/CameraRaycast
 @onready var label_3d: Label3D = $Label3D
-@onready var sprite_3d: Sprite3D = $Camera3D/Sprite3D
-@onready var spawn_marker: Marker3D = $Camera3D/SpawnMarker
+@onready var sprite_3d: Sprite3D = $Head/Sprite3D
+@onready var spawn_marker: Marker3D = $Head/SpawnMarker
 @onready var hand_marker: Marker3D = $HandPosition
 
 const BALL = preload("uid://cs8xyd0piode7")
@@ -25,13 +26,15 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	if not OS.get_cmdline_args().has("--client"):
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	#if not OS.get_cmdline_args().has("--client"):
+		#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
+	print("from ", multiplayer.get_unique_id(), ": node '", name, "'=", is_multiplayer_authority())
 	if is_multiplayer_authority():
 		camera.make_current()
 	else:
 		camera.current = false
+		camera.queue_free()
 
 
 func _physics_process(delta: float) -> void:
@@ -95,8 +98,8 @@ func _input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * mouse_sensitivity)
-		camera.rotate_x(-event.relative.y * mouse_sensitivity)
-		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
+		head.rotate_x(-event.relative.y * mouse_sensitivity)
+		head.rotation.x = clamp(head.rotation.x, -PI/2, PI/2)
 	
 	if event.is_action_pressed("pause"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -146,7 +149,7 @@ func pick_up(obj: Pickupable) -> void:
 
 
 func drop() -> void:
-	picked_up_object.drop.rpc()
+	picked_up_object.drop.rpc(picked_up_object.global_transform)
 	picked_up_object = null
 
 

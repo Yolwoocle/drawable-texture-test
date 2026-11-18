@@ -26,6 +26,8 @@ func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 	
+	body.rotation.y = body.holder_player.rotation.y
+	
 	body.freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
 	body.freeze = true
 	body.linear_velocity = Vector3.ZERO

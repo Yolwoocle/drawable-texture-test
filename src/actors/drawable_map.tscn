@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b6ur0u55orfc3" path="res://assets/pen_shape.png" id="3_2wg52"]
 [ext_resource type="Texture2D" uid="uid://bujkxul7vcco7" path="res://assets/eraser_shape.png" id="4_2sjtc"]
 [ext_resource type="Script" uid="uid://dw1pbag08kead" path="res://addons/shaker/gameplay/3d/interaction_area_3d.gd" id="5_3wrhl"]
-[ext_resource type="Shader" uid="uid://dree6qjuw2kwy" path="res://src/texutre_rect.gdshader" id="5_tpkxe"]
+[ext_resource type="Shader" uid="uid://dree6qjuw2kwy" path="res://src/actors/drawable_map.gdshader" id="5_tpkxe"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
 size = Vector3(2, 0.01, 2)

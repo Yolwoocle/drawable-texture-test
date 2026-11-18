@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bqp0e3e6qemek"]
 
-[ext_resource type="Script" uid="uid://ch3hl0jwksfgr" path="res://src/global.gd" id="1_r7evp"]
+[ext_resource type="Script" uid="uid://ch3hl0jwksfgr" path="res://src/autoload/global.gd" id="1_r7evp"]
 [ext_resource type="Script" uid="uid://cy006uvidc4y" path="res://addons/tube/tube_client.gd" id="2_1korl"]
 [ext_resource type="Resource" uid="uid://dcu7wrfcxlp0u" path="res://resources/online/tube_context.tres" id="3_m7a4q"]
 

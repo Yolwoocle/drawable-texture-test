@@ -4,10 +4,14 @@ extends MultiplayerSynchronizer
 
 var _body_parent: RigidBody3D
 
-@export var sync_position: Vector3 
-@export var sync_rotation: Quaternion
-@export var sync_linear_velocity: Vector3
-@export var sync_angular_velocity: Vector3
+@export var interpolation_enabled: bool = true
+@export var interpolation_speed: float = 15.0
+@export var snap_distance: float = 4.0
+
+var sync_position: Vector3 
+var sync_rotation: Quaternion
+var sync_linear_velocity: Vector3
+var sync_angular_velocity: Vector3
 
 func _ready() -> void:
 	replication_config = SceneReplicationConfig.new()
@@ -33,7 +37,21 @@ func _physics_process(delta: float) -> void:
 		sync_angular_velocity = _body_parent.angular_velocity
 		
 	else:
-		_body_parent.global_position = sync_position
-		_body_parent.global_transform.basis = Basis(sync_rotation)
+		if not interpolation_enabled or sync_position.distance_squared_to(_body_parent.global_position) > snap_distance * snap_distance:
+			_body_parent.global_position = sync_position
+			_body_parent.global_transform.basis = Basis(sync_rotation)
+			
+		else:
+			var weight: float = 1.0 - exp(-interpolation_speed * delta)
+			_body_parent.global_position = _body_parent.global_position.lerp(sync_position, weight)
+			
+			var par_rot = _body_parent.global_transform.basis
+			_body_parent.global_transform.basis = Basis(par_rot.slerp(sync_rotation, weight))
+		
 		_body_parent.linear_velocity = sync_linear_velocity
 		_body_parent.angular_velocity = sync_angular_velocity
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("debug_toggle_interpolation"):
+		interpolation_enabled = not interpolation_enabled

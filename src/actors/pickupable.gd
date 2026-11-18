@@ -37,12 +37,14 @@ func pick_up(player_path: NodePath, new_authority: int):
 
 
 @rpc("any_peer", "call_local")
-func drop():
+func drop(drop_transform: Transform3D):
 	is_picked_up = false
 	
 	# Only for local client
 	collision_shape.disabled = false
 	interaction_collision_shape.disabled = false
+	
+	global_transform = drop_transform
 	
 	set_multiplayer_authority(1)
 	state_machine.travel_to("Normal")

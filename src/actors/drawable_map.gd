@@ -17,8 +17,6 @@ var drawable_texture: DrawableTexture2D
 var _last_draw_pos: Vector2i
 var _is_drawing: bool = false
 
-var is_eraser: bool = false
-
 var _mesh: PlaneMesh
 
 var _interact_raycast: InteractionRayCast3D
@@ -70,6 +68,7 @@ func interact_at(event_position: Vector3):
 	var uv_pos = (Vector2(transf_pos.x, transf_pos.z) / size) + Vector2(0.5, 0.5)
 	var tex_pos = uv_pos * background_texture.get_size()
 	var draw_color = _interact_marker.color
+	var is_eraser = _interact_marker.is_eraser
 	
 	if _last_draw_pos == Vector2i.MAX:
 		_last_draw_pos = tex_pos
