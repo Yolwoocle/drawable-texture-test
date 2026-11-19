@@ -1,4 +1,4 @@
-class_name DrawableMap
+class_name Whiteboard
 extends Node3D
 
 var drawable_texture: DrawableTexture2D
@@ -20,7 +20,7 @@ var _is_drawing: bool = false
 var _mesh: PlaneMesh
 
 var _interact_raycast: InteractionRayCast3D
-var _interact_marker: Marker
+var _interact_marker: WhiteboardInteractible
 
 var eraser_material: BlitMaterial
 
@@ -90,7 +90,7 @@ func _on_interact(raycast: InteractionRayCast3D, pos: Vector3):
 		return
 	var player = (raycast.owner as Player)
 	var object_used = player.picked_up_object
-	if object_used is not Marker:
+	if object_used is not WhiteboardInteractible:
 		return
 	
 	put_pen()

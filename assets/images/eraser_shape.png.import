@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://m4enrwk74rmn"
-path="res://.godot/imported/brush.png-16b075978ff60de9c0c5adcfecf03cfd.ctex"
+uid="uid://bujkxul7vcco7"
+path="res://.godot/imported/eraser_shape.png-8a363f9f43dde83f7c86856449762abf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/brush.png"
-dest_files=["res://.godot/imported/brush.png-16b075978ff60de9c0c5adcfecf03cfd.ctex"]
+source_file="res://assets/images/eraser_shape.png"
+dest_files=["res://.godot/imported/eraser_shape.png-8a363f9f43dde83f7c86856449762abf.ctex"]
 
 [params]
 
@@ -32,7 +32,7 @@ process/channel_remap/green=1
 process/channel_remap/blue=2
 process/channel_remap/alpha=3
 process/fix_alpha_border=true
-process/premult_alpha=false
+process/premult_alpha=true
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false

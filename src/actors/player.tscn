@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://bt05aaf5nwip"]
 
 [ext_resource type="Script" uid="uid://b21c5m5qgaj80" path="res://src/actors/player.gd" id="1_foe4e"]
-[ext_resource type="Texture2D" uid="uid://bm3bx85ij3bfg" path="res://assets/face.png" id="2_xk21n"]
+[ext_resource type="Script" uid="uid://6curaxdi221q" path="res://addons/shaker/multiplayer/3d/voice_chat_3d.gd" id="2_1oxso"]
+[ext_resource type="Texture2D" uid="uid://bm3bx85ij3bfg" path="res://assets/images/face.png" id="2_xk21n"]
 [ext_resource type="Script" uid="uid://dhmskjubm4tfs" path="res://addons/shaker/gameplay/3d/interaction_raycast_3d.gd" id="3_1oxso"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gmfve"]
@@ -17,10 +18,19 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("Head:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath("VoiceChat3D:mic_enabled")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_g4v7s"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_xk21n"]
+mix_rate = 48000.0
+buffer_length = 0.1
 
 [node name="Player" type="CharacterBody3D" unique_id=1689985493]
 script = ExtResource("1_foe4e")
@@ -36,7 +46,7 @@ debug_color = Color(1, 0.9166666, 0, 1)
 mesh = SubResource("CapsuleMesh_g4v7s")
 
 [node name="HandPosition" type="Marker3D" parent="." unique_id=68453968]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.111747205, -1.2020259)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.111747205, -0.8274246)
 
 [node name="Head" type="Node3D" parent="." unique_id=107974971]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50453544, 0)
@@ -62,3 +72,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5164397, 0)
 billboard = 1
 no_depth_test = true
 text = "qdsqsdqsddsq"
+
+[node name="VoiceChat3D" type="Node3D" parent="." unique_id=1335558561 node_paths=PackedStringArray("input", "output", "listener")]
+script = ExtResource("2_1oxso")
+input = NodePath("MicInput")
+output = NodePath("AudioStreamPlayer3D")
+listener = NodePath("AudioListener3D")
+
+[node name="MicInput" type="AudioStreamPlayer" parent="VoiceChat3D" unique_id=48724323]
+stream = SubResource("AudioStreamMicrophone_g4v7s")
+bus = &"Microphone"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="VoiceChat3D" unique_id=652007394]
+stream = SubResource("AudioStreamGenerator_xk21n")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="VoiceChat3D" unique_id=1368315104]

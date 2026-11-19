@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1khv5h33ahbt"
-path.s3tc="res://.godot/imported/empty_canvas.png-508d708890aa7dacafeb29beb41a19d6.s3tc.ctex"
+uid="uid://bm3bx85ij3bfg"
+path.s3tc="res://.godot/imported/face.png-53405e2227d9622ec7f32fc1d297f5c2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/empty_canvas.png"
-dest_files=["res://.godot/imported/empty_canvas.png-508d708890aa7dacafeb29beb41a19d6.s3tc.ctex"]
+source_file="res://assets/images/face.png"
+dest_files=["res://.godot/imported/face.png-53405e2227d9622ec7f32fc1d297f5c2.s3tc.ctex"]
 
 [params]
 

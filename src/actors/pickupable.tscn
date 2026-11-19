@@ -11,9 +11,6 @@
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_u2t8m"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
-radius = 0.20321275
-
 [node name="Pickupable" type="RigidBody3D" unique_id=594947906]
 physics_interpolation_mode = 1
 collision_layer = 4
@@ -38,9 +35,8 @@ script = ExtResource("3_s7jr2")
 metadata/_custom_type_script = "uid://dw1pbag08kead"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea3D" unique_id=695253823]
-shape = SubResource("SphereShape3D_g4v7s")
 
-[node name="Visuals" type="Node3D" parent="." unique_id=612910898]
+[node name="Visuals" type="Node3D" parent="." unique_id=1847511646]
 
 [node name="StateMachine" type="Node" parent="." unique_id=131307649]
 script = ExtResource("4_3g7ym")

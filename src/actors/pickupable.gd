@@ -9,6 +9,8 @@ extends RigidBody3D
 var is_picked_up: bool = false
 var holder_player: Player
 
+var _reset_motion_flag: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -16,6 +18,19 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	pass
+
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	if _reset_motion_flag:
+		_reset_motion_flag = false
+		state.linear_velocity = Vector3.ZERO
+		state.angular_velocity = Vector3.ZERO
+		constant_force = Vector3.ZERO
+		constant_torque = Vector3.ZERO
+
+
+func reset_motion():
+	_reset_motion_flag = true
 
 
 @rpc("any_peer", "call_local")

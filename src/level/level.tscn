@@ -1,13 +1,20 @@
 [gd_scene format=3 uid="uid://c8hla63rn7ie4"]
 
 [ext_resource type="Script" uid="uid://dnieoilmd8kvh" path="res://src/level/level.gd" id="1_jq0je"]
-[ext_resource type="Texture2D" uid="uid://car7h1dwbv2di" path="res://assets/cursor.png" id="2_pothl"]
-[ext_resource type="PackedScene" uid="uid://c4vwphv1r51oy" path="res://src/actors/marker.tscn" id="3_7i26j"]
+[ext_resource type="Script" uid="uid://xbxya8tb6hnc" path="res://src/level/hud.gd" id="2_p6v4a"]
+[ext_resource type="Texture2D" uid="uid://car7h1dwbv2di" path="res://assets/images/cursor.png" id="2_pothl"]
+[ext_resource type="Texture2D" uid="uid://cy3gja4a4uxsd" path="res://assets/images/ui/mic_on.png" id="3_ob0n7"]
+[ext_resource type="PackedScene" uid="uid://cqqmw87xmf8am" path="res://src/actors/brush.tscn" id="4_w7y1s"]
 [ext_resource type="PackedScene" uid="uid://cs8xyd0piode7" path="res://src/actors/ball.tscn" id="4_wc5yb"]
+[ext_resource type="PackedScene" uid="uid://mpyrdgt3khcn" path="res://src/actors/marker.tscn" id="5_5vox1"]
 [ext_resource type="PackedScene" uid="uid://b3i2lo314576y" path="res://src/actors/drawable_map.tscn" id="5_ssy8p"]
 [ext_resource type="PackedScene" uid="uid://dujkendqt6ls1" path="res://src/tube_inspector.tscn" id="6_lmnmg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kqbth"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_p6v4a"]
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
@@ -50,6 +57,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_p6v4a")
 
 [node name="TextureRect" type="TextureRect" parent="HUD" unique_id=1742147748]
 layout_mode = 1
@@ -85,35 +93,62 @@ grow_horizontal = 0
 label_settings = SubResource("LabelSettings_kqbth")
 horizontal_alignment = 2
 
+[node name="MarginContainer" type="MarginContainer" parent="HUD" unique_id=1560795658]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/MarginContainer" unique_id=187699450]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="MicLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer" unique_id=23401209]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "[V] Mute / Unmute    "
+label_settings = SubResource("LabelSettings_p6v4a")
+
+[node name="MicVolume" type="ProgressBar" parent="HUD/MarginContainer/HBoxContainer" unique_id=2027205488]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="MicIcon" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer" unique_id=691979661]
+unique_name_in_owner = true
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_ob0n7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer" unique_id=1477186525]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="ChatLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer" unique_id=584544848]
+layout_mode = 2
+vertical_alignment = 2
+
+[node name="LineEdit" type="LineEdit" parent="HUD/MarginContainer/VBoxContainer" unique_id=1029139537]
+layout_mode = 2
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1579522978]
 environment = SubResource("Environment_g4v7s")
 
 [node name="Actors" type="Node3D" parent="." unique_id=1752580695]
-
-[node name="Marker" parent="Actors" unique_id=594947906 instance=ExtResource("3_7i26j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, -0.7495475)
-color = Color(0.19550002, 0.27185845, 0.85, 1)
-is_eraser = false
-
-[node name="Marker2" parent="Actors" unique_id=1026498888 instance=ExtResource("3_7i26j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, -0.27159023)
-color = Color(0.080000035, 0.48, 0, 1)
-is_eraser = false
-
-[node name="Marker3" parent="Actors" unique_id=1580191934 instance=ExtResource("3_7i26j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, 0.13826835)
-color = Color(0, 0, 0, 1)
-is_eraser = false
-
-[node name="Marker4" parent="Actors" unique_id=1679657396 instance=ExtResource("3_7i26j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, 0.55009556)
-color = Color(0.98, 0, 0.09799991, 1)
-is_eraser = false
-
-[node name="Marker5" parent="Actors" unique_id=1649898260 instance=ExtResource("3_7i26j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8647432, 0.54492044, 1.0017772)
-color = Color(1, 1, 1, 1)
-is_eraser = true
 
 [node name="Pickupable" parent="Actors" unique_id=799627446 instance=ExtResource("4_wc5yb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 0)
@@ -132,6 +167,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 2.63474
 
 [node name="Pickupable6" parent="Actors" unique_id=765669265 instance=ExtResource("4_wc5yb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.268216, 0.42200804, 3.3165815)
+
+[node name="Brush" parent="Actors" unique_id=594947906 instance=ExtResource("4_w7y1s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3072357, 0.42001534, 0)
+
+[node name="Marker" parent="Actors" unique_id=1595071330 instance=ExtResource("5_5vox1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4421477, 0.3962975, 0.3048401)
+color = Color(0, 0, 0, 1)
+
+[node name="Marker2" parent="Actors" unique_id=2075838653 instance=ExtResource("5_5vox1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4421477, 0.3962975, 0.5520225)
+color = Color(0.17930788, 0.24988014, 0.76069033, 1)
+
+[node name="Marker3" parent="Actors" unique_id=855925357 instance=ExtResource("5_5vox1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4421477, 0.3962975, 0.8188582)
+color = Color(0.77, 0, 0.076999925, 1)
+
+[node name="Marker4" parent="Actors" unique_id=406672456 instance=ExtResource("5_5vox1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4421477, 0.3962975, 1.0978513)
+color = Color(0.076699995, 0.59, 0.18791501, 1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=391488667]
 transform = Transform3D(0.9510047, 7.085537e-09, -0.3091765, 0.08993775, 0.95675516, 0.27664202, 0.29580623, -0.2908945, 0.9098786, -3.02632, 2.592535, 6.6203403)

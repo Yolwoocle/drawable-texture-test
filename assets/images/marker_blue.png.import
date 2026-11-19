@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://o723aibrfgpt"
-path="res://.godot/imported/marker_black.png-3d417d56f76464f71ba2317bcee706f0.ctex"
+uid="uid://dvxaid42x5ogg"
+path="res://.godot/imported/marker_blue.png-e2ca4770714cd2f5834cfbf4bee45ba7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/marker_black.png"
-dest_files=["res://.godot/imported/marker_black.png-3d417d56f76464f71ba2317bcee706f0.ctex"]
+source_file="res://assets/images/marker_blue.png"
+dest_files=["res://.godot/imported/marker_blue.png-e2ca4770714cd2f5834cfbf4bee45ba7.ctex"]
 
 [params]
 

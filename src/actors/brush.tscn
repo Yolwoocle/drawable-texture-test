@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cqqmw87xmf8am"]
+
+[ext_resource type="PackedScene" uid="uid://c4vwphv1r51oy" path="res://src/actors/whiteboard_interactible.tscn" id="1_6jpcl"]
+[ext_resource type="PackedScene" uid="uid://b6m360butdgrq" path="res://assets/models/brush.glb" id="2_mnm2v"]
+[ext_resource type="Script" uid="uid://ckapdmvuquymw" path="res://src/actors/brush.gd" id="2_w1p0y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6jpcl"]
+size = Vector3(0.40527344, 0.1048584, 0.13354492)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c73ul"]
+size = Vector3(0.5107422, 0.19833374, 0.28320313)
+
+[node name="Brush" unique_id=594947906 instance=ExtResource("1_6jpcl")]
+script = ExtResource("2_w1p0y")
+is_eraser = true
+
+[node name="CollisionShape3D" parent="." index="2" unique_id=1837587082]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010437012, -0.0025634766)
+shape = SubResource("BoxShape3D_6jpcl")
+
+[node name="CollisionShape3D" parent="InteractionArea3D" parent_id_path=PackedInt32Array(975181771) index="0" unique_id=695253823]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010696411, 0)
+shape = SubResource("BoxShape3D_c73ul")
+
+[node name="brush" parent="Visuals" parent_id_path=PackedInt32Array(1847511646) index="0" unique_id=1977212467 instance=ExtResource("2_mnm2v")]
+transform = Transform3D(0.355, 0, 0, 0, 0.355, 0, 0, 0, 0.355, 0, 0, 0)

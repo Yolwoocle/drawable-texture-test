@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c4vwphv1r51oy"]
+
+[ext_resource type="PackedScene" uid="uid://dce8xqb65vplp" path="res://src/actors/pickupable.tscn" id="1_sinyo"]
+[ext_resource type="Script" uid="uid://cjl1x7yik3uo6" path="res://src/actors/whiteboard_interactible.gd" id="2_3cyt3"]
+
+[node name="WhiteboardInteractible" unique_id=594947906 instance=ExtResource("1_sinyo")]
+script = ExtResource("2_3cyt3")
+color = Color(0.2274938, 0.4937638, 1, 1)
+is_eraser = false

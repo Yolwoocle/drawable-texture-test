@@ -10,6 +10,7 @@ func _on_enter_state(params: Dictionary = {}):
 	body.freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
 	body.linear_velocity = Vector3.ZERO
 	body.angular_velocity = Vector3.ZERO
+	body.reset_motion()
 	body.freeze = true
 
 
@@ -19,6 +20,7 @@ func _on_exit_state():
 	
 	body.linear_velocity = Vector3.ZERO
 	body.angular_velocity = Vector3.ZERO
+	body.reset_motion()
 	body.freeze = false
 
 

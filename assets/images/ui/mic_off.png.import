@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6ur0u55orfc3"
-path="res://.godot/imported/pen_shape.png-82b44b7fdfce0bcf4d9abf4bb0efc9ec.ctex"
+uid="uid://dsxlqyjr4d4th"
+path="res://.godot/imported/mic_off.png-4a512e876574930eb3e5db7f6790414b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pen_shape.png"
-dest_files=["res://.godot/imported/pen_shape.png-82b44b7fdfce0bcf4d9abf4bb0efc9ec.ctex"]
+source_file="res://assets/images/ui/mic_off.png"
+dest_files=["res://.godot/imported/mic_off.png-4a512e876574930eb3e5db7f6790414b.ctex"]
 
 [params]
 

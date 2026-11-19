@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody3D
 
+signal mic_changed(enabled: bool)
+
 const normal_mouse_sensitivity: float = 0.015
 const draw_mouse_sensitivity: float = 0.005
 var mouse_sensitivity = normal_mouse_sensitivity
@@ -15,6 +17,7 @@ const JUMP_VELOCITY = 4.5
 @onready var sprite_3d: Sprite3D = $Head/Sprite3D
 @onready var spawn_marker: Marker3D = $Head/SpawnMarker
 @onready var hand_marker: Marker3D = $HandPosition
+@onready var voice_chat: VoiceChat3D = $VoiceChat3D
 
 const BALL = preload("uid://cs8xyd0piode7")
 
@@ -35,6 +38,12 @@ func _ready() -> void:
 	else:
 		camera.current = false
 		camera.queue_free()
+		set_process_input(false)
+	
+	voice_chat.mic_changed.connect(func(x): mic_changed.emit(x))
+	
+	if OS.get_cmdline_args().has("--mute"):
+		voice_chat.mute()
 
 
 func _physics_process(delta: float) -> void:
@@ -42,7 +51,9 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	sprite_3d.hide()
-	label_3d.text = "%s\n(%s)" % [ OSUtil.get_system_username(), multiplayer.get_unique_id()]
+	label_3d.text = "%s\n(%s)\n%s" % [ OSUtil.get_system_username(), multiplayer.get_unique_id(), 
+		("📢" if voice_chat.current_volume > 0.1 else " ") if voice_chat.mic_enabled else "🔇"
+	]
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -73,23 +84,11 @@ func _process(delta: float) -> void:
 		var hit_object = get_interacted_object()
 		var hit_pos = get_interacted_position()
 		
-		if hit_object and hit_object is DrawableMap:
+		if hit_object and hit_object is Whiteboard:
 			hit_object.interact_at(hit_pos)
 		
 	else:
 		mouse_sensitivity = normal_mouse_sensitivity
-
-
-func get_interacted_object():
-	if camera_raycast.is_colliding():
-		return camera_raycast.get_collider()
-	return null
-
-
-func get_interacted_position():
-	if camera_raycast.is_colliding():
-		return camera_raycast.get_collision_point()
-	return null
 
 
 func _input(event: InputEvent) -> void:
@@ -124,13 +123,28 @@ func _input(event: InputEvent) -> void:
 	
 	
 	if event.is_action_pressed("throw"):
-		#if interacted_object and interacted_object.owner is DrawableMap:
+		#if interacted_object and interacted_object.owner is Whiteboard:
 			#interacted_object.release_pen()
 		if picked_up_object:
 			drop()
 		
 	if event.is_action_released("spawn_ball"):
 		_spawn_ball.rpc_id(1, spawn_marker.global_position)
+	
+	if event.is_action_pressed("toggle_mic"):
+		voice_chat.mic_enabled = not voice_chat.mic_enabled
+
+
+func get_interacted_object():
+	if camera_raycast.is_colliding():
+		return camera_raycast.get_collider()
+	return null
+
+
+func get_interacted_position():
+	if camera_raycast.is_colliding():
+		return camera_raycast.get_collision_point()
+	return null
 
 
 @rpc("authority", "call_local")

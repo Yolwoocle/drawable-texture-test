@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvhynunyevo1l"
-path="res://.godot/imported/marker_red.png-8820e459c60430eef42fe16954a2f197.ctex"
+uid="uid://m4enrwk74rmn"
+path="res://.godot/imported/brush.png-63cbdcd0d63761849f9f1baafe502caa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/marker_red.png"
-dest_files=["res://.godot/imported/marker_red.png-8820e459c60430eef42fe16954a2f197.ctex"]
+source_file="res://assets/images/brush.png"
+dest_files=["res://.godot/imported/brush.png-63cbdcd0d63761849f9f1baafe502caa.ctex"]
 
 [params]
 
