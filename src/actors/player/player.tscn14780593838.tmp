@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://bt05aaf5nwip"]
+
+[ext_resource type="Script" uid="uid://b21c5m5qgaj80" path="res://src/actors/player/player.gd" id="1_dmu6e"]
+[ext_resource type="Texture2D" uid="uid://bm3bx85ij3bfg" path="res://assets/images/face.png" id="2_8tnyb"]
+[ext_resource type="Script" uid="uid://dhmskjubm4tfs" path="res://addons/shaker/gameplay/3d/interaction_raycast_3d.gd" id="3_qdy1o"]
+[ext_resource type="Script" uid="uid://6curaxdi221q" path="res://addons/shaker/multiplayer/3d/voice_chat_3d.gd" id="4_nq65r"]
+[ext_resource type="Script" uid="uid://drpttt3optl3r" path="res://addons/shaker/state/state_machine.gd" id="5_wabo4"]
+[ext_resource type="Script" uid="uid://b5k4t2fjqkkg7" path="res://src/actors/player/moving.gd" id="6_b2jwx"]
+[ext_resource type="Script" uid="uid://d2yeksubl8jou" path="res://src/actors/player/sitting.gd" id="7_8tnyb"]
+[ext_resource type="Script" uid="uid://b5yxhv0qgi8rt" path="res://addons/shaker/multiplayer/3d/multiplayer_character_body_3d_synchronizer.gd" id="8_qdy1o"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gmfve"]
+properties/0/path = NodePath("Label3D:text")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Head:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("VoiceChat3D:mic_enabled")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qdy1o"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_g4v7s"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_xk21n"]
+mix_rate = 48000.0
+buffer_length = 0.1
+
+[node name="Player" type="CharacterBody3D" unique_id=1689985493]
+script = ExtResource("1_dmu6e")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=800178854]
+replication_config = SubResource("SceneReplicationConfig_gmfve")
+
+[node name="MultiplayerCharacterBody3DSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1346087358]
+replication_config = SubResource("SceneReplicationConfig_qdy1o")
+script = ExtResource("8_qdy1o")
+metadata/_custom_type_script = "uid://b5yxhv0qgi8rt"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=474508133]
+shape = SubResource("CapsuleShape3D_g4v7s")
+debug_color = Color(1, 0.9166666, 0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1687114378]
+mesh = SubResource("CapsuleMesh_g4v7s")
+
+[node name="HandPosition" type="Marker3D" parent="." unique_id=68453968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.111747205, -0.8274246)
+
+[node name="Head" type="Node3D" parent="." unique_id=107974971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50453544, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=780948810]
+current = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Head" unique_id=1418116726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.006882429, -0.5424875)
+texture = ExtResource("2_8tnyb")
+
+[node name="CameraRaycast" type="RayCast3D" parent="Head" unique_id=754008345]
+target_position = Vector3(0, 0, -6)
+collision_mask = 3
+collide_with_areas = true
+script = ExtResource("3_qdy1o")
+
+[node name="SpawnMarker" type="Marker3D" parent="Head" unique_id=2095966257]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.2020259)
+
+[node name="Label3D" type="Label3D" parent="." unique_id=630984199]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5164397, 0)
+billboard = 1
+no_depth_test = true
+text = "qdsqsdqsddsq"
+
+[node name="VoiceChat3D" type="Node3D" parent="." unique_id=1335558561 node_paths=PackedStringArray("input", "output", "listener")]
+script = ExtResource("4_nq65r")
+input = NodePath("MicInput")
+output = NodePath("AudioStreamPlayer3D")
+listener = NodePath("AudioListener3D")
+
+[node name="MicInput" type="AudioStreamPlayer" parent="VoiceChat3D" unique_id=48724323]
+stream = SubResource("AudioStreamMicrophone_g4v7s")
+bus = &"Microphone"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="VoiceChat3D" unique_id=652007394]
+stream = SubResource("AudioStreamGenerator_xk21n")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="VoiceChat3D" unique_id=1368315104]
+
+[node name="StateMachine" type="Node" parent="." unique_id=280609918]
+script = ExtResource("5_wabo4")
+default_state = &"Moving"
+metadata/_custom_type_script = "uid://drpttt3optl3r"
+
+[node name="Moving" type="Node" parent="StateMachine" unique_id=966292736]
+script = ExtResource("6_b2jwx")
+metadata/_custom_type_script = "uid://bpqjpkhit0v31"
+
+[node name="Sitting" type="Node" parent="StateMachine" unique_id=1232905814]
+script = ExtResource("7_8tnyb")
+metadata/_custom_type_script = "uid://bpqjpkhit0v31"

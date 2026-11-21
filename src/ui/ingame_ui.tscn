@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bvrj4l0w3l346"]
+
+[ext_resource type="Script" uid="uid://cxjjexjq4w7w0" path="res://src/ui/ingame_ui.gd" id="1_3i8a0"]
+[ext_resource type="PackedScene" uid="uid://bp5p7cd0n6cq0" path="res://src/ui/pause_menu.tscn" id="2_3i8a0"]
+
+[node name="MenuSwitcher" type="Control" unique_id=398990862]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3i8a0")
+metadata/_custom_type_script = "uid://djc866ij4v1au"
+
+[node name="PauseMenu" parent="." unique_id=257270170 instance=ExtResource("2_3i8a0")]
+visible = false
+layout_mode = 1

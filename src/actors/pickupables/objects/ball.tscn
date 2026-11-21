@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://y0nej82nqnnk"]
+
+[ext_resource type="Script" uid="uid://q5015xgrccw7" path="res://src/actors/pickupables/objects/ball.gd" id="1_e2vjs"]
+[ext_resource type="PackedScene" uid="uid://dce8xqb65vplp" path="res://src/actors/pickupables/pickupable.tscn" id="1_qbu0q"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gpkfr"]
+radius = 0.2003442
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_o7awu"]
+radius = 0.25180092
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbu0q"]
+resource_local_to_scene = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_qbu0q")
+radius = 0.2
+height = 0.4
+
+[node name="Ball" unique_id=594947906 instance=ExtResource("1_qbu0q")]
+script = ExtResource("1_e2vjs")
+
+[node name="CollisionShape3D" parent="." index="2" unique_id=1837587082]
+shape = SubResource("SphereShape3D_gpkfr")
+
+[node name="CollisionShape3D" parent="InteractionArea3D" parent_id_path=PackedInt32Array(975181771) index="0" unique_id=695253823]
+shape = SubResource("SphereShape3D_o7awu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals" parent_id_path=PackedInt32Array(1847511646) index="0" unique_id=1155641717]
+mesh = SubResource("SphereMesh_g4v7s")

@@ -1,5 +1,5 @@
-@icon("./multiplayer_rigidbody_3d_synchronizer.svg")
-class_name MultiplayerRigidbody3DSynchronizer
+@icon("./multiplayer_rigid_body_3d_synchronizer.svg")
+class_name MultiplayerRigidBody3DSynchronizer
 extends MultiplayerSynchronizer
 
 var _body_parent: RigidBody3D
@@ -22,7 +22,14 @@ func _ready() -> void:
 	
 	if get_parent() is not RigidBody3D:
 		push_error("Parent is not RigidBody3D")
+		set_physics_process(false)
+		return
 	_body_parent = get_parent() as RigidBody3D
+	
+	sync_position = _body_parent.global_position
+	sync_rotation = _body_parent.global_transform.basis.get_rotation_quaternion()
+	sync_linear_velocity = _body_parent.linear_velocity
+	sync_angular_velocity = _body_parent.angular_velocity
 	
 	if not is_multiplayer_authority():
 		_body_parent.freeze = true
@@ -45,7 +52,7 @@ func _physics_process(delta: float) -> void:
 			var weight: float = 1.0 - exp(-interpolation_speed * delta)
 			_body_parent.global_position = _body_parent.global_position.lerp(sync_position, weight)
 			
-			var par_rot = _body_parent.global_transform.basis
+			var par_rot: Quaternion = _body_parent.global_transform.basis.get_rotation_quaternion()
 			_body_parent.global_transform.basis = Basis(par_rot.slerp(sync_rotation, weight))
 		
 		_body_parent.linear_velocity = sync_linear_velocity

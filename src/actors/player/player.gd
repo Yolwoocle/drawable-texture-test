@@ -3,12 +3,9 @@ extends CharacterBody3D
 
 signal mic_changed(enabled: bool)
 
-const normal_mouse_sensitivity: float = 0.015
-const draw_mouse_sensitivity: float = 0.005
+var normal_mouse_sensitivity: float = 0.01
+var draw_mouse_sensitivity: float = 0.005
 var mouse_sensitivity = normal_mouse_sensitivity
-
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
@@ -18,8 +15,9 @@ const JUMP_VELOCITY = 4.5
 @onready var spawn_marker: Marker3D = $Head/SpawnMarker
 @onready var hand_marker: Marker3D = $HandPosition
 @onready var voice_chat: VoiceChat3D = $VoiceChat3D
+@onready var state_machine: StateMachine = $StateMachine
 
-const BALL = preload("uid://cs8xyd0piode7")
+const BALL = preload("uid://y0nej82nqnnk")
 
 var interacted_object: InteractionArea3D
 var picked_up_object: Pickupable
@@ -29,10 +27,6 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	#if not OS.get_cmdline_args().has("--client"):
-		#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-	print("from ", multiplayer.get_unique_id(), ": node '", name, "'=", is_multiplayer_authority())
 	if is_multiplayer_authority():
 		camera.make_current()
 	else:
@@ -52,27 +46,8 @@ func _physics_process(delta: float) -> void:
 	
 	sprite_3d.hide()
 	label_3d.text = "%s\n(%s)\n%s" % [ OSUtil.get_system_username(), multiplayer.get_unique_id(), 
-		("📢" if voice_chat.current_volume > 0.1 else " ") if voice_chat.mic_enabled else "🔇"
+		("📢" if voice_chat.current_volume > 0.01 else " ") if voice_chat.mic_enabled else "🔇"
 	]
-	
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	var input_dir := Input.get_vector("left", "right", "up", "down")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-	
-	move_and_slide()
 
 
 func _process(delta: float) -> void:
@@ -100,27 +75,17 @@ func _input(event: InputEvent) -> void:
 		head.rotate_x(-event.relative.y * mouse_sensitivity)
 		head.rotation.x = clamp(head.rotation.x, -PI/2, PI/2)
 	
-	if event.is_action_pressed("pause"):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
 	if event.is_action_pressed("interact"):
 		if picked_up_object:
 			picked_up_object.use()
 		
 		var obj = camera_raycast.target_area
 		if obj:
-			interacted_object = obj
-			camera_raycast.start_interact()
-			if obj.owner is Pickupable and not picked_up_object:
-				pick_up(obj.owner)
+			_on_interact(obj)
 	
 	if event.is_action_released("interact"):
 		camera_raycast.end_interact()
 		interacted_object = null
-	
 	
 	if event.is_action_pressed("throw"):
 		#if interacted_object and interacted_object.owner is Whiteboard:
@@ -145,6 +110,17 @@ func get_interacted_position():
 	if camera_raycast.is_colliding():
 		return camera_raycast.get_collision_point()
 	return null
+
+
+func _on_interact(object: InteractionArea3D) -> void:
+	interacted_object = object
+	camera_raycast.start_interact()
+	if object.owner is Pickupable and not picked_up_object:
+		pick_up(object.owner)
+	elif object is SitArea:
+		state_machine.travel_to("Sitting", {"target": object})
+	else:
+		pass
 
 
 @rpc("authority", "call_local")

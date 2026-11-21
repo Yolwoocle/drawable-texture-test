@@ -1,11 +1,11 @@
-class_name Game
+class_name Main
 extends Node
 
-@onready var level_container: Node3D = $LevelContainer
+@onready var game_container: Node3D = $GameContainer
 @onready var join_menu: Control = $JoinMenu
 
 const DEBUG_SESSION_ID_FILE = "user://debug_session_id.txt"
-const LEVEL = preload("uid://c8hla63rn7ie4")
+const GAME = preload("uid://c8hla63rn7ie4")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,8 +35,8 @@ func _delay_join_debug_server():
 
 
 func _on_tube_client_session_created() -> void:
-	var level = LEVEL.instantiate()
-	level_container.add_child(level, true)
+	var level = GAME.instantiate()
+	game_container.add_child(level, true)
 	
 	join_menu.queue_free()
 

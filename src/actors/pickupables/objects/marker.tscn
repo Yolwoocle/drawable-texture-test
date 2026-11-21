@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://mpyrdgt3khcn"]
 
-[ext_resource type="PackedScene" uid="uid://c4vwphv1r51oy" path="res://src/actors/whiteboard_interactible.tscn" id="1_8gte7"]
-[ext_resource type="Script" uid="uid://d3dw53161wj8u" path="res://src/actors/marker.gd" id="2_gvpc0"]
+[ext_resource type="PackedScene" uid="uid://c4vwphv1r51oy" path="res://src/actors/pickupables/objects/whiteboard_interactible.tscn" id="1_8gte7"]
+[ext_resource type="Script" uid="uid://d3dw53161wj8u" path="res://src/actors/pickupables/objects/marker.gd" id="2_gvpc0"]
 [ext_resource type="PackedScene" uid="uid://ckw13d2q3l16v" path="res://assets/models/marker.glb" id="3_gvpc0"]
-[ext_resource type="Shader" uid="uid://lugv3ogpwsla" path="res://src/actors/marker.gdshader" id="4_c73ul"]
+[ext_resource type="Shader" uid="uid://lugv3ogpwsla" path="res://src/actors/pickupables/objects/marker.gdshader" id="4_c73ul"]
 [ext_resource type="Texture2D" uid="uid://eemetjfrnq6k" path="res://assets/models/marker_generic.png" id="5_c73ul"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_o0ark"]
@@ -14,7 +14,7 @@ radius = 0.063964844
 height = 0.6621094
 radius = 0.12109375
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c73ul"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l6gs4"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("4_c73ul")
@@ -36,6 +36,6 @@ shape = SubResource("CylinderShape3D_c73ul")
 
 [node name="Cylinder" parent="Visuals/marker" index="0" unique_id=1722101273]
 transform = Transform3D(-1.2239188e-08, -0.28, 0, 0.28, -1.2239188e-08, 0, 0, 0, 0.28, 0, 0, 0)
-surface_material_override/0 = SubResource("ShaderMaterial_c73ul")
+surface_material_override/0 = SubResource("ShaderMaterial_l6gs4")
 
 [editable path="Visuals/marker"]

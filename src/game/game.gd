@@ -1,4 +1,4 @@
-class_name Level
+class_name Game
 extends Node3D
 
 @onready var label: Label = $HUD/Label
@@ -9,6 +9,9 @@ const PLAYER = preload("uid://bt05aaf5nwip")
 const DEBUG_SESSION_ID_FILE = "user://debug_session_id.txt"
 
 var current_player: Player
+
+var ping_ms := 0.0
+var _ping_timer := 0.0
 
 func _enter_tree() -> void:
 	pass
@@ -26,11 +29,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	current_player = actors.get_node_or_null(str(multiplayer.get_unique_id()))
+	Global.current_player = current_player
 	
-	label_right.text = ""
-	if current_player:
-		label_right.text += "picked_up_object: %s\n" % [current_player.picked_up_object]
-	label_right.text += "\n" % []
+	if not multiplayer.is_server():
+		_ping_timer += delta
+		if _ping_timer >= 1.0:
+			_ping_timer = 0.0
+			_ping.rpc_id(1, Time.get_ticks_msec())
 
 
 func _on_tube_client_session_created() -> void:
@@ -73,3 +78,13 @@ func start():
 		label.text += "Copied to clipboard\n"
 	label.text += "\n"
 	label.text += "Username: %s (%s)\n" % [OSUtil.get_system_username(), multiplayer.get_unique_id()]
+
+
+@rpc("any_peer", "call_remote", "unreliable")
+func _ping(time: int):
+	if multiplayer.is_server():
+		_pong.rpc_id(multiplayer.get_remote_sender_id(), time)
+
+@rpc("authority", "call_remote", "unreliable")
+func _pong(time: int):
+	ping_ms = Time.get_ticks_msec() - time

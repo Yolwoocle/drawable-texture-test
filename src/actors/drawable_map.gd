@@ -25,6 +25,9 @@ var _interact_marker: WhiteboardInteractible
 var eraser_material: BlitMaterial
 
 func _ready() -> void:
+	if not multiplayer.is_server():
+		_request_sync.rpc_id(1)
+	
 	drawable_texture = DrawableTexture2D.new()
 	drawable_texture.setup(background_texture.get_width(), background_texture.get_height(), DrawableTexture2D.DRAWABLE_FORMAT_RGBA8, Color.TRANSPARENT)
 	
@@ -101,3 +104,25 @@ func _on_interact(raycast: InteractionRayCast3D, pos: Vector3):
 func _on_interact_end(raycast: InteractionRayCast3D):
 	release_pen()
 	_interact_raycast = null
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func _request_sync():
+	if not multiplayer.is_server():
+		return
+	
+	var bytes = drawable_texture.get_image().save_png_to_buffer()
+	_sync.rpc_id(multiplayer.get_remote_sender_id(), bytes)
+
+
+@rpc("authority", "call_remote", "reliable")
+func _sync(image_bytes: PackedByteArray) -> void:
+	var img = Image.new()
+	var err = img.load_png_from_buffer(image_bytes)
+	if err != OK:
+		push_error("Could not load image: " + error_string(err))
+		return
+	
+	var texture := ImageTexture.create_from_image(img) 
+	drawable_texture.setup(img.get_width(), img.get_height(), DrawableTexture2D.DRAWABLE_FORMAT_RGBA8, Color.TRANSPARENT)
+	drawable_texture.blit_rect(Rect2(Vector2.ZERO, img.get_size()), texture, Color.WHITE)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7jy4lkji8ib2"
-path="res://.godot/imported/multiplayer_rigidbody_3d_synchronizer.svg-ec58b12d52e33b0b760c5343fc66d3f1.ctex"
+uid="uid://bjjb3mc070mtk"
+path="res://.godot/imported/multiplayer_character_body_3d_synchronizer.svg-1dddea26b22d5ff5d6bf67e854906c89.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/shaker/multiplayer/3d/multiplayer_rigidbody_3d_synchronizer.svg"
-dest_files=["res://.godot/imported/multiplayer_rigidbody_3d_synchronizer.svg-ec58b12d52e33b0b760c5343fc66d3f1.ctex"]
+source_file="res://addons/shaker/multiplayer/3d/multiplayer_character_body_3d_synchronizer.svg"
+dest_files=["res://.godot/imported/multiplayer_character_body_3d_synchronizer.svg-1dddea26b22d5ff5d6bf67e854906c89.ctex"]
 
 [params]
 

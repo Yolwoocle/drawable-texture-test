@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dpkxa7h8ri2wm"]
+
+[ext_resource type="PackedScene" uid="uid://dce8xqb65vplp" path="res://src/actors/pickupables/pickupable.tscn" id="1_tcj51"]
+[ext_resource type="Script" uid="uid://ui4h37frj0qh" path="res://src/actors/pickupables/objects/trumpet.gd" id="2_jyddi"]
+[ext_resource type="PackedScene" uid="uid://ddk2drm0xh1gf" path="res://assets/models/trumpet.glb" id="2_mwqtc"]
+[ext_resource type="AudioStream" uid="uid://706ke5jy1tgb" path="res://assets/sounds/trumpet.ogg" id="3_k76u8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mwqtc"]
+radius = 0.08154297
+height = 0.75
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jyddi"]
+radius = 0.119140625
+height = 0.90234375
+
+[node name="Trumpet" unique_id=594947906 instance=ExtResource("1_tcj51")]
+script = ExtResource("2_jyddi")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="2" unique_id=1178802413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32752904, 0.047785938, 0)
+stream = ExtResource("3_k76u8")
+
+[node name="CollisionShape3D" parent="." index="3" unique_id=1837587082]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -0.027832031, 0.03111838, 0)
+shape = SubResource("CapsuleShape3D_mwqtc")
+
+[node name="CollisionShape3D" parent="InteractionArea3D" parent_id_path=PackedInt32Array(975181771) index="0" unique_id=695253823]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -0.026619434, 0.03308113, 0)
+shape = SubResource("CapsuleShape3D_jyddi")
+
+[node name="trumpet" parent="Visuals" parent_id_path=PackedInt32Array(1847511646) index="0" unique_id=1363575070 instance=ExtResource("2_mwqtc")]
+
+[node name="_0_0_node" parent="Visuals/trumpet" index="0" unique_id=1530342448]
+transform = Transform3D(-1.1404448e-08, 0.07, 0, -0.07, -1.1404448e-08, 0, 0, 0, 0.07, 0, 0, 0)
+
+[editable path="Visuals/trumpet"]
