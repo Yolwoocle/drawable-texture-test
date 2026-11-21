@@ -84,12 +84,6 @@ layout_mode = 2
 text = "Mouse sensitivity"
 horizontal_alignment = 2
 
-[node name="MouseSensitivityLabel" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer" unique_id=514188442]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-horizontal_alignment = 2
-
 [node name="MouseSensitivitySlider" type="HSlider" parent="MarginContainer/VBoxContainer2/HBoxContainer" unique_id=1204391928]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 0)
@@ -99,6 +93,12 @@ min_value = 0.001
 max_value = 0.1
 step = 0.001
 value = 0.001
+
+[node name="MouseSensitivityLabel" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer" unique_id=514188442]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+horizontal_alignment = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer2" unique_id=645879366]
 layout_mode = 2
@@ -110,12 +110,6 @@ layout_mode = 2
 text = "Volume"
 horizontal_alignment = 2
 
-[node name="VolumeLabel" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer2" unique_id=1988721751]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-horizontal_alignment = 2
-
 [node name="VolumeSlider" type="HSlider" parent="MarginContainer/VBoxContainer2/HBoxContainer2" unique_id=198016101]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 0)
@@ -123,3 +117,26 @@ layout_mode = 2
 size_flags_vertical = 4
 max_value = 1.0
 step = 0.01
+
+[node name="VolumeLabel" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer2" unique_id=1988721751]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer2" unique_id=285053390]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer3" unique_id=1977717531]
+layout_mode = 2
+text = "Input device"
+horizontal_alignment = 2
+
+[node name="InputDeviceOptionButton" type="OptionButton" parent="MarginContainer/VBoxContainer2/HBoxContainer3" unique_id=1761212567]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+item_count = 1
+popup/item_0/id = 0
