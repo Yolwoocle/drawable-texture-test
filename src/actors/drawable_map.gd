@@ -7,7 +7,7 @@ var drawable_texture: DrawableTexture2D
 @export var background_texture: Texture2D
 @export var pen_texture: Texture2D
 @export var eraser_texture: Texture2D
-@export var collision_margin: float = 1.1
+@export var collision_margin: float = 0.1
 
 @onready var _mesh_inst: MeshInstance3D = $MeshInstance3D
 @onready var interaction_area: InteractionArea3D = $InteractionArea3D
@@ -38,7 +38,9 @@ func _ready() -> void:
 	_mesh = _mesh_inst.mesh
 	_mesh.size = size
 	
-	(collision_shape_3d.shape as BoxShape3D).size = Vector3(size.x, 0.1, size.y)
+	var box = (collision_shape_3d.shape as BoxShape3D)
+	box.size = Vector3(size.x, collision_margin, size.y)
+	collision_shape_3d.position.y = -collision_margin / 2
 	
 	eraser_material = BlitMaterial.new()
 	eraser_material.blend_mode = BlitMaterial.BLEND_MODE_SUB
@@ -49,11 +51,12 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if _is_drawing and _interact_raycast:
-		interact_at(_interact_raycast.target_point)
+		draw_at(_interact_raycast.target_point)
 
 
 @rpc("any_peer", "call_local")
 func _interpolate_draw(pos1: Vector2i, pos2: Vector2i, color: Color, eraser: bool) -> void:
+	print(multiplayer.get_unique_id(), " interp draw ", pos1, " ", pos2, " col=", color, " eraser=", eraser)
 	var steps = max(pos2.distance_to(pos1), 1.0)
 	for i in steps:
 		var pos = lerp(Vector2(pos1), Vector2(pos2), float(i) / float(steps))
@@ -63,11 +66,13 @@ func _interpolate_draw(pos1: Vector2i, pos2: Vector2i, color: Color, eraser: boo
 		drawable_texture.blit_rect(Rect2i(pos - tex.get_size()/2, tex.get_size()), tex, color, 0, mat)
 
 
-func interact_at(event_position: Vector3):
+func draw_at(event_position: Vector3):
 	if not _is_drawing:
 		return
 	
-	var transf_pos = (transform.affine_inverse() * event_position)
+	print("interact ", event_position)
+	
+	var transf_pos = (global_transform.inverse() * event_position)
 	var uv_pos = (Vector2(transf_pos.x, transf_pos.z) / size) + Vector2(0.5, 0.5)
 	var tex_pos = uv_pos * background_texture.get_size()
 	var draw_color = _interact_marker.color

@@ -8,14 +8,17 @@
 [ext_resource type="Shader" uid="uid://dree6qjuw2kwy" path="res://src/actors/drawable_map.gdshader" id="5_tpkxe"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
-size = Vector3(2, 0.01, 2)
+resource_local_to_scene = true
+size = Vector3(2, 0.1, 2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("5_tpkxe")
 shader_parameter/bg_texture = ExtResource("2_b1r3h")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_g4v7s"]
+resource_local_to_scene = true
 material = SubResource("ShaderMaterial_1bvp3")
 size = Vector2(3, 3)
 
@@ -38,8 +41,4 @@ shape = SubResource("BoxShape3D_yf5fn")
 debug_color = Color(0, 0.85000014, 1, 0.41960785)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1905817712]
-mesh = SubResource("PlaneMesh_g4v7s")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1867666422]
-transform = Transform3D(-1, 8.742278e-08, -3.821371e-15, -8.742278e-08, -1, 8.742278e-08, 3.821371e-15, 8.742278e-08, 1, 0, 0, 0)
 mesh = SubResource("PlaneMesh_g4v7s")

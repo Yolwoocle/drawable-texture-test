@@ -11,6 +11,7 @@ const GAME = preload("uid://c8hla63rn7ie4")
 func _ready() -> void:
 	Global.tube_client.session_created.connect(_on_tube_client_session_created)
 	Global.tube_client.session_joined.connect(_on_tube_client_session_joined)
+	Global.tube_client.session_left.connect(_on_tube_client_session_left)
 	
 	var args = OS.get_cmdline_args()
 	if args.has("--server"):
@@ -44,7 +45,11 @@ func _on_tube_client_session_created() -> void:
 func _on_tube_client_session_joined() -> void:
 	pass
 	
-	join_menu.queue_free()
+	join_menu.hide()
+
+
+func _on_tube_client_session_left() -> void:
+	join_menu.show()
 
 
 func join_session(session_id: String) -> void:
