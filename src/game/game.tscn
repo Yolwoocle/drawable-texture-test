@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cy3gja4a4uxsd" path="res://assets/images/ui/mic_on.png" id="4_htx8b"]
 [ext_resource type="PackedScene" uid="uid://y0nej82nqnnk" path="res://src/actors/pickupables/objects/ball.tscn" id="5_ueio8"]
 [ext_resource type="PackedScene" uid="uid://cqqmw87xmf8am" path="res://src/actors/pickupables/objects/brush.tscn" id="6_etvrb"]
+[ext_resource type="Texture2D" uid="uid://bswbtq6ncy8fi" path="res://assets/textures/texture_02.png" id="7_etvrb"]
 [ext_resource type="Script" uid="uid://c1n2xdhwlg8ae" path="res://src/actors/sit_area.gd" id="7_htx8b"]
 [ext_resource type="PackedScene" uid="uid://mpyrdgt3khcn" path="res://src/actors/pickupables/objects/marker.tscn" id="7_xniy2"]
 [ext_resource type="PackedScene" uid="uid://dpkxa7h8ri2wm" path="res://src/actors/pickupables/objects/trumpet.tscn" id="8_7r0dx"]
@@ -27,6 +28,8 @@ sky = SubResource("Sky_rlaii")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5mrjc"]
 albedo_color = Color(0.63, 1, 0.6793333, 1)
+albedo_texture = ExtResource("7_etvrb")
+uv1_scale = Vector3(250, 250, 250)
 
 [sub_resource type="QuadMesh" id="QuadMesh_g4v7s"]
 material = SubResource("StandardMaterial3D_5mrjc")
@@ -171,7 +174,7 @@ shape = SubResource("BoxShape3D_g4v7s")
 mesh = SubResource("BoxMesh_g4v7s")
 
 [node name="SitArea" type="Area3D" parent="Level" unique_id=1765699460]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.891804, 0.3100561, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5002744, 0.1987701, -0.5005371)
 script = ExtResource("7_htx8b")
 metadata/_custom_type_script = "uid://c1n2xdhwlg8ae"
 

@@ -27,6 +27,8 @@ func _process(delta: float) -> void:
 		var sync = game.current_player.get_node("MultiplayerCharacterBody3DSynchronizer")
 		label_right.text += "CharacterBody Interpolation: %s\n" % [str(sync.interpolation_enabled)]
 		
+		label_right.text += "Vehicle: %s\n" % [str(game.current_player.current_vehicle)]
+		
 	
 	label_right.text += "\n" % []
 

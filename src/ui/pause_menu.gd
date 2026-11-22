@@ -65,5 +65,4 @@ func _on_volume_slider_value_changed(value: float) -> void:
 
 func _on_input_device_option_button_item_selected(index: int) -> void:
 	var device_name = input_device_option_button.get_item_text(index)
-	print("select ", index, " ", device_name)
 	AudioServer.input_device = device_name

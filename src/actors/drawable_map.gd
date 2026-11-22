@@ -56,7 +56,6 @@ func _process(delta: float) -> void:
 
 @rpc("any_peer", "call_local")
 func _interpolate_draw(pos1: Vector2i, pos2: Vector2i, color: Color, eraser: bool) -> void:
-	print(multiplayer.get_unique_id(), " interp draw ", pos1, " ", pos2, " col=", color, " eraser=", eraser)
 	var steps = max(pos2.distance_to(pos1), 1.0)
 	for i in steps:
 		var pos = lerp(Vector2(pos1), Vector2(pos2), float(i) / float(steps))
@@ -70,9 +69,7 @@ func draw_at(event_position: Vector3):
 	if not _is_drawing:
 		return
 	
-	print("interact ", event_position)
-	
-	var transf_pos = (global_transform.inverse() * event_position)
+	var transf_pos = (global_transform.affine_inverse() * event_position)
 	var uv_pos = (Vector2(transf_pos.x, transf_pos.z) / size) + Vector2(0.5, 0.5)
 	var tex_pos = uv_pos * background_texture.get_size()
 	var draw_color = _interact_marker.color

@@ -33,6 +33,10 @@ mix_rate = 48000.0
 buffer_length = 0.1
 
 [node name="Player" type="CharacterBody3D" unique_id=1689985493]
+collision_layer = 8
+collision_mask = 7
+platform_on_leave = 2
+platform_floor_layers = 4294967291
 script = ExtResource("1_dmu6e")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=800178854]
@@ -67,7 +71,7 @@ texture = ExtResource("2_8tnyb")
 
 [node name="CameraRaycast" type="RayCast3D" parent="Head" unique_id=754008345]
 target_position = Vector3(0, 0, -6)
-collision_mask = 3
+collision_mask = 15
 collide_with_areas = true
 script = ExtResource("3_qdy1o")
 

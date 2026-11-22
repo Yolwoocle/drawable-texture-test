@@ -22,6 +22,9 @@ const BALL = preload("uid://y0nej82nqnnk")
 var interacted_object: InteractionArea3D
 var picked_up_object: Pickupable
 
+var current_vehicle: VehicleBody3D
+var _last_vehicle_transform: Transform3D = Transform3D.IDENTITY
+
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
@@ -43,6 +46,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
+	#
+	if current_vehicle:
+		if _last_vehicle_transform != Transform3D.IDENTITY:
+			var delta_transf = current_vehicle.global_transform * _last_vehicle_transform.affine_inverse()
+			global_position = delta_transf * global_position
+			rotate_y(delta_transf.basis.get_euler().y)
+		
+		_last_vehicle_transform = current_vehicle.global_transform
 	
 	sprite_3d.hide()
 	label_3d.text = "%s\n(%s)\n%s" % [ OSUtil.get_system_username(), multiplayer.get_unique_id(), 
@@ -110,6 +121,16 @@ func get_interacted_position():
 	if camera_raycast.is_colliding():
 		return camera_raycast.get_collision_point()
 	return null
+
+
+func enter_vehicle(vehicle: VehicleBody3D):
+	current_vehicle = vehicle
+	_last_vehicle_transform = vehicle.global_transform
+
+
+func exit_vehicle():
+	current_vehicle = null
+	_last_vehicle_transform = Transform3D.IDENTITY
 
 
 func _on_interact(object: InteractionArea3D) -> void:
