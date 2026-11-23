@@ -140,6 +140,8 @@ func exit_vehicle():
 	if not is_multiplayer_authority():
 		return
 	
+	#if current_vehicle:
+		#velocity = current_vehicle.linear_velocity
 	current_vehicle = null
 	current_vehicle_path = ""
 	_last_vehicle_transform = Transform3D.IDENTITY
