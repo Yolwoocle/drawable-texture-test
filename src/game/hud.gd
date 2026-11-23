@@ -22,12 +22,17 @@ func _process(delta: float) -> void:
 	label_right.text += "Ping: %sms\n" % [game.ping_ms]
 	if game.current_player:
 		label_right.text += "Pos: %s\n" % [game.current_player.global_position]
-		label_right.text += "picked_up_object: %s\n" % [game.current_player.picked_up_object]
+		label_right.text += "Picked up: %s\n" % [game.current_player.picked_up_object]
 		
 		var sync = game.current_player.get_node("MultiplayerCharacterBody3DSynchronizer")
 		label_right.text += "CharacterBody Interpolation: %s\n" % [str(sync.interpolation_enabled)]
 		
 		label_right.text += "Vehicle: %s\n" % [str(game.current_player.current_vehicle)]
+		
+		if game.current_player.constrain_y_rot:
+			label_right.text += "Rot constraint: (%s) - (%s) / relative: %s\n" % [rad_to_deg(game.current_player.constrain_y_rot_min), rad_to_deg(game.current_player.constrain_y_rot_max), game.current_player.constrain_y_rot_relative_obj]
+		else:
+			label_right.text += "Rot constraint: false\n"
 		
 	
 	label_right.text += "\n" % []

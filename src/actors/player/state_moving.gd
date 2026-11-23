@@ -1,3 +1,4 @@
+class_name StateMoving
 extends State
 
 const SPEED = 5.0

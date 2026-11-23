@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://iwo32ew1n53p" path="res://src/actors/caravan.gd" id="1_ekl5v"]
 [ext_resource type="Script" uid="uid://cuujpp6nbpmx3" path="res://addons/shaker/multiplayer/3d/multiplayer_rigid_body_3d_synchronizer.gd" id="2_0j8fe"]
-[ext_resource type="Script" uid="uid://c1n2xdhwlg8ae" path="res://src/actors/sit_area.gd" id="3_lbsk8"]
+[ext_resource type="Script" uid="uid://d3a8xmv563h6o" path="res://src/actors/car_sit_area.gd" id="3_jv5nl"]
 [ext_resource type="Script" uid="uid://cm3esbwhp55lu" path="res://src/actors/vehicle_area_3d.gd" id="4_jv5nl"]
 [ext_resource type="PackedScene" uid="uid://b3i2lo314576y" path="res://src/actors/drawable_map.tscn" id="4_q3tms"]
 
@@ -185,6 +185,7 @@ height = 0.2
 collision_layer = 4
 collision_mask = 5
 mass = 1500.0
+center_of_mass_mode = 1
 script = ExtResource("1_ekl5v")
 
 [node name="MultiplayerRigidBody3DSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=83068229]
@@ -411,7 +412,9 @@ text = "qdsqsdqsddsq"
 
 [node name="SitArea" type="Area3D" parent="." unique_id=1307872308]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3284427, 0.42976174, -2.9956214)
-script = ExtResource("3_lbsk8")
+script = ExtResource("3_jv5nl")
+constrain_look_range = true
+look_range = 1.5707963267948966
 metadata/_custom_type_script = "uid://c1n2xdhwlg8ae"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SitArea" unique_id=1733816152]
@@ -437,10 +440,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0014648438, 0.0546875, 0.0
 shape = SubResource("BoxShape3D_g4v7s")
 
 [node name="WheelFR" type="VehicleWheel3D" parent="." unique_id=1245447779]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.15639937, -3)
 use_as_traction = true
 wheel_radius = 0.4
-suspension_stiffness = 50.0
+suspension_stiffness = 100.0
 damping_relaxation = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WheelFR" unique_id=909586113]
@@ -448,10 +451,10 @@ transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0
 mesh = SubResource("CylinderMesh_cnp54")
 
 [node name="WheelFL" type="VehicleWheel3D" parent="." unique_id=817903161]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.15639937, -3)
 use_as_traction = true
 wheel_radius = 0.4
-suspension_stiffness = 50.0
+suspension_stiffness = 100.0
 damping_relaxation = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WheelFL" unique_id=2082779037]
@@ -459,10 +462,10 @@ transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0
 mesh = SubResource("CylinderMesh_cnp54")
 
 [node name="WheelBR" type="VehicleWheel3D" parent="." unique_id=626009044]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 3.0000002)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.15639937, 3.0000002)
 use_as_steering = true
 wheel_radius = 0.4
-suspension_stiffness = 50.0
+suspension_stiffness = 100.0
 damping_relaxation = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WheelBR" unique_id=297904831]
@@ -470,10 +473,10 @@ transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0
 mesh = SubResource("CylinderMesh_cnp54")
 
 [node name="WheelBL" type="VehicleWheel3D" parent="." unique_id=884705151]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 3.0000002)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.15639937, 3.0000002)
 use_as_steering = true
 wheel_radius = 0.4
-suspension_stiffness = 50.0
+suspension_stiffness = 100.0
 damping_relaxation = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WheelBL" unique_id=1460294601]

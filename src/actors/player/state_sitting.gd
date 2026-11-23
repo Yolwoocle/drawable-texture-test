@@ -1,3 +1,4 @@
+class_name StateSitting
 extends State
 
 @onready var player: Player = $"../.."
@@ -11,15 +12,26 @@ func _ready() -> void:
 func _on_enter_state(params: Dictionary = {}):
 	if not is_multiplayer_authority():
 		return
+	
 	sit_area = params["target"]
 	sit_area._player_enter(player)
 	player.global_position = sit_area.global_position
+	
+	if sit_area.constrain_look_range:
+		player.constrain_y_rot = true
+		player.constrain_y_rot_min = -sit_area.look_range
+		player.constrain_y_rot_max = sit_area.look_range
+		player.constrain_y_rot_relative_obj = sit_area
 
 
 func _on_exit_state():
 	if not is_multiplayer_authority():
 		return
+	
 	sit_area._player_exit(player)
+	
+	if sit_area.constrain_look_range:
+		player.constrain_y_rot = false
 
 
 func _physics_process(delta: float) -> void:

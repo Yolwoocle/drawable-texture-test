@@ -18,6 +18,11 @@ var mouse_sensitivity = normal_mouse_sensitivity
 @onready var state_machine: StateMachine = $StateMachine
 @onready var body_synchronizer: MultiplayerCharacterBody3DSynchronizer = $MultiplayerCharacterBody3DSynchronizer
 
+var constrain_y_rot: = false
+var constrain_y_rot_min := 0.0
+var constrain_y_rot_max := 0.0
+var constrain_y_rot_relative_obj: Node3D
+
 const BALL = preload("uid://y0nej82nqnnk")
 
 var interacted_object: InteractionArea3D
@@ -67,6 +72,8 @@ func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 	
+	_apply_y_rot_constraint()
+	
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		mouse_sensitivity = normal_mouse_sensitivity * draw_mouse_sensitivity_mult
 		var hit_object = get_interacted_object()
@@ -87,6 +94,7 @@ func _input(event: InputEvent) -> void:
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		head.rotate_x(-event.relative.y * mouse_sensitivity)
 		head.rotation.x = clamp(head.rotation.x, -PI/2, PI/2)
+		_apply_y_rot_constraint()
 	
 	if event.is_action_pressed("interact"):
 		if picked_up_object:
@@ -111,6 +119,21 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("toggle_mic"):
 		voice_chat.mic_enabled = not voice_chat.mic_enabled
+
+
+func _apply_y_rot_constraint():
+	if not constrain_y_rot:
+		return
+	
+	var ref_basis = Basis.IDENTITY
+	if is_instance_valid(constrain_y_rot_relative_obj):
+		ref_basis = constrain_y_rot_relative_obj.global_transform.basis.orthonormalized()
+	
+	var rel_basis = ref_basis.inverse() * global_transform.basis.orthonormalized()
+	var rel_euler = rel_basis.get_euler()
+	rel_euler.y = clampf(rel_euler.y, constrain_y_rot_min, constrain_y_rot_max)
+	
+	global_transform.basis = ref_basis * Basis.from_euler(rel_euler)
 
 
 func get_interacted_object():
@@ -154,6 +177,8 @@ func _on_interact(object: InteractionArea3D) -> void:
 	camera_raycast.start_interact()
 	if object.owner is Pickupable and not picked_up_object:
 		pick_up(object.owner)
+	elif object is CarSitArea:
+		state_machine.travel_to("Driving", {"target": object})
 	elif object is SitArea:
 		state_machine.travel_to("Sitting", {"target": object})
 	else:

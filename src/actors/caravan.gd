@@ -10,6 +10,9 @@ extends VehicleBody3D
 
 var driver: Player
 
+var steer_input: float = 0.0
+var throttle_input: float = 0.0
+
 func _ready() -> void:
 	sit_area.player_entered.connect(_on_sit_area_player_entered)
 	sit_area.player_exited.connect(_on_sit_area_player_exited)
@@ -18,9 +21,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
-	
-	var steer_input = Input.get_axis("debug_car_left", "debug_car_right")
-	var throttle_input = Input.get_axis("debug_car_front", "debug_car_back")
 	
 	steering = move_toward(steering, steer_input * max_steer, delta * steer_speed)
 	engine_force = throttle_input * engine_power
@@ -34,3 +34,12 @@ func _on_sit_area_player_entered(player: Player):
 
 func _on_sit_area_player_exited(player: Player):
 	driver = null
+
+
+@rpc("any_peer", "call_local")
+func set_steer_input(steer: float, throttle: float):
+	if not is_multiplayer_authority():
+		return
+	
+	steer_input = steer
+	throttle_input = throttle

@@ -5,9 +5,10 @@
 [ext_resource type="Script" uid="uid://dhmskjubm4tfs" path="res://addons/shaker/gameplay/3d/interaction_raycast_3d.gd" id="3_qdy1o"]
 [ext_resource type="Script" uid="uid://6curaxdi221q" path="res://addons/shaker/multiplayer/3d/voice_chat_3d.gd" id="4_nq65r"]
 [ext_resource type="Script" uid="uid://drpttt3optl3r" path="res://addons/shaker/state/state_machine.gd" id="5_wabo4"]
-[ext_resource type="Script" uid="uid://b5k4t2fjqkkg7" path="res://src/actors/player/moving.gd" id="6_b2jwx"]
-[ext_resource type="Script" uid="uid://d2yeksubl8jou" path="res://src/actors/player/sitting.gd" id="7_8tnyb"]
+[ext_resource type="Script" uid="uid://b5k4t2fjqkkg7" path="res://src/actors/player/state_moving.gd" id="6_b2jwx"]
+[ext_resource type="Script" uid="uid://d2yeksubl8jou" path="res://src/actors/player/state_sitting.gd" id="7_8tnyb"]
 [ext_resource type="Script" uid="uid://b5yxhv0qgi8rt" path="res://addons/shaker/multiplayer/3d/multiplayer_character_body_3d_synchronizer.gd" id="8_qdy1o"]
+[ext_resource type="Script" uid="uid://dkm45lwk1d5gh" path="res://src/actors/player/state_driving.gd" id="9_nq65r"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gmfve"]
 properties/0/path = NodePath("Label3D:text")
@@ -116,4 +117,8 @@ metadata/_custom_type_script = "uid://bpqjpkhit0v31"
 
 [node name="Sitting" type="Node" parent="StateMachine" unique_id=1232905814]
 script = ExtResource("7_8tnyb")
+metadata/_custom_type_script = "uid://bpqjpkhit0v31"
+
+[node name="Driving" type="Node" parent="StateMachine" unique_id=997819307]
+script = ExtResource("9_nq65r")
 metadata/_custom_type_script = "uid://bpqjpkhit0v31"

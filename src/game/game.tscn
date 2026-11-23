@@ -176,6 +176,8 @@ mesh = SubResource("BoxMesh_g4v7s")
 [node name="SitArea" type="Area3D" parent="Level" unique_id=1765699460]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5002744, 0.1987701, -0.5005371)
 script = ExtResource("7_htx8b")
+constrain_look_range = true
+look_range = 0.7853981633974483
 metadata/_custom_type_script = "uid://c1n2xdhwlg8ae"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Level/SitArea" unique_id=1676731503]
