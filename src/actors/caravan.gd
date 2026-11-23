@@ -8,7 +8,17 @@ extends VehicleBody3D
 @onready var label_3d: Label3D = $Label3D
 @onready var sit_area: SitArea = $SitArea
 
+var driver: Player
+
+func _ready() -> void:
+	sit_area.player_entered.connect(_on_sit_area_player_entered)
+	sit_area.player_exited.connect(_on_sit_area_player_exited)
+
+
 func _physics_process(delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
+	
 	var steer_input = Input.get_axis("debug_car_left", "debug_car_right")
 	var throttle_input = Input.get_axis("debug_car_front", "debug_car_back")
 	
@@ -16,3 +26,11 @@ func _physics_process(delta: float) -> void:
 	engine_force = throttle_input * engine_power
 	
 	label_3d.text = str(sit_area.sat_player)
+
+
+func _on_sit_area_player_entered(player: Player):
+	driver = player
+
+
+func _on_sit_area_player_exited(player: Player):
+	driver = null

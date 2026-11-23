@@ -4,7 +4,7 @@ extends CharacterBody3D
 signal mic_changed(enabled: bool)
 
 var normal_mouse_sensitivity: float = 0.01
-var draw_mouse_sensitivity: float = 0.005
+var draw_mouse_sensitivity_mult: float = 0.75
 var mouse_sensitivity = normal_mouse_sensitivity
 
 @onready var head: Node3D = $Head
@@ -16,6 +16,7 @@ var mouse_sensitivity = normal_mouse_sensitivity
 @onready var hand_marker: Marker3D = $HandPosition
 @onready var voice_chat: VoiceChat3D = $VoiceChat3D
 @onready var state_machine: StateMachine = $StateMachine
+@onready var body_synchronizer: MultiplayerCharacterBody3DSynchronizer = $MultiplayerCharacterBody3DSynchronizer
 
 const BALL = preload("uid://y0nej82nqnnk")
 
@@ -23,6 +24,7 @@ var interacted_object: InteractionArea3D
 var picked_up_object: Pickupable
 
 var current_vehicle: VehicleBody3D
+var current_vehicle_path: String
 var _last_vehicle_transform: Transform3D = Transform3D.IDENTITY
 
 func _enter_tree() -> void:
@@ -66,7 +68,7 @@ func _process(delta: float) -> void:
 		return
 	
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		mouse_sensitivity = draw_mouse_sensitivity
+		mouse_sensitivity = normal_mouse_sensitivity * draw_mouse_sensitivity_mult
 		var hit_object = get_interacted_object()
 		var hit_pos = get_interacted_position()
 		
@@ -124,13 +126,25 @@ func get_interacted_position():
 
 
 func enter_vehicle(vehicle: VehicleBody3D):
+	if not is_multiplayer_authority():
+		return
+	
 	current_vehicle = vehicle
+	current_vehicle_path = vehicle.get_path()
 	_last_vehicle_transform = vehicle.global_transform
+	
+	body_synchronizer.set_relative_object(vehicle)
 
 
 func exit_vehicle():
+	if not is_multiplayer_authority():
+		return
+	
 	current_vehicle = null
+	current_vehicle_path = ""
 	_last_vehicle_transform = Transform3D.IDENTITY
+	
+	body_synchronizer.set_relative_object(null)
 
 
 func _on_interact(object: InteractionArea3D) -> void:

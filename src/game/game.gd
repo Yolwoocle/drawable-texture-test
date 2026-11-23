@@ -2,7 +2,7 @@ class_name Game
 extends Node3D
 
 @onready var label: Label = $HUD/Label
-@onready var label_right: Label = $HUD/LabelRight
+@onready var label_right: Label = %LabelRight
 @onready var actors: Node3D = $Actors
 
 const PLAYER = preload("uid://bt05aaf5nwip")
@@ -36,6 +36,12 @@ func _process(delta: float) -> void:
 		if _ping_timer >= 1.0:
 			_ping_timer = 0.0
 			_ping.rpc_id(1, Time.get_ticks_msec())
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("debug_toggle_ui"):
+		label.visible = not label.visible
+		label_right.visible = not label_right.visible
 
 
 func _on_tube_client_session_created() -> void:

@@ -404,6 +404,7 @@ mesh = SubResource("BoxMesh_td4v2")
 
 [node name="Label3D" type="Label3D" parent="." unique_id=325101366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1386867, 2.0731792, -2.9956214)
+visible = false
 billboard = 1
 no_depth_test = true
 text = "qdsqsdqsddsq"
