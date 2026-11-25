@@ -1,11 +1,27 @@
 [gd_scene format=3 uid="uid://dwh8kc5dkbudd"]
 
 [ext_resource type="Script" uid="uid://dw1pbag08kead" path="res://addons/shaker/gameplay/3d/interaction_area_3d.gd" id="1_lusmm"]
+[ext_resource type="Script" uid="uid://ckcm5cnsunksy" path="res://src/actors/handbrake.gd" id="1_sw0c6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
 size = Vector3(0.34375, 0.5, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lusmm"]
+albedo_color = Color(0.091, 0.09424999, 0.13, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_lusmm")
+size = Vector3(0.3, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sw0c6"]
+albedo_color = Color(0.231, 0.23925, 0.33, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lusmm"]
+material = SubResource("StandardMaterial3D_sw0c6")
+size = Vector3(0.095703125, 0.1, 0.7734375)
+
 [node name="Handbrake" type="Node3D" unique_id=216961361]
+script = ExtResource("1_sw0c6")
 
 [node name="InteractionArea3D" type="Area3D" parent="." unique_id=1364503883]
 script = ExtResource("1_lusmm")
@@ -14,3 +30,18 @@ metadata/_custom_type_script = "uid://dw1pbag08kead"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea3D" unique_id=875943604]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=775323221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.049999997, 0)
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="Handle" type="Node3D" parent="." unique_id=1972741786]
+transform = Transform3D(1, 0, 0, 0, 0.90733963, -0.4203984, 0, 0.4203984, 0.90733963, 0, 0.08285038, 0.26974553)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Handle" unique_id=1444916246]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2822693)
+mesh = SubResource("BoxMesh_lusmm")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=196502216]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7351496, 0)
+billboard = 1

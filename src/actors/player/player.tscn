@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b21c5m5qgaj80" path="res://src/actors/player/player.gd" id="1_dmu6e"]
 [ext_resource type="Texture2D" uid="uid://bm3bx85ij3bfg" path="res://assets/images/face.png" id="2_8tnyb"]
-[ext_resource type="Script" uid="uid://dhmskjubm4tfs" path="res://addons/shaker/gameplay/3d/interaction_raycast_3d.gd" id="3_qdy1o"]
+[ext_resource type="Script" uid="uid://dhmskjubm4tfs" path="res://addons/shaker/gameplay/3d/interaction_ray_cast_3d.gd" id="3_qdy1o"]
 [ext_resource type="Script" uid="uid://6curaxdi221q" path="res://addons/shaker/multiplayer/3d/voice_chat_3d.gd" id="4_nq65r"]
 [ext_resource type="Script" uid="uid://drpttt3optl3r" path="res://addons/shaker/state/state_machine.gd" id="5_wabo4"]
 [ext_resource type="Script" uid="uid://b5k4t2fjqkkg7" path="res://src/actors/player/state_moving.gd" id="6_b2jwx"]

@@ -4,9 +4,11 @@ extends VehicleBody3D
 @export var engine_power = 1200.0
 @export_range(0.0, 360.0, 0.1, "radians_as_degrees") var max_steer = PI * 0.15
 @export var steer_speed = 5.0
+@export var brake_power = 40.0
 
 @onready var label_3d: Label3D = $Label3D
 @onready var sit_area: SitArea = $SitArea
+@onready var handbrake: Handbrake = $Handbrake
 
 var driver: Player
 
@@ -16,6 +18,9 @@ var throttle_input: float = 0.0
 func _ready() -> void:
 	sit_area.player_entered.connect(_on_sit_area_player_entered)
 	sit_area.player_exited.connect(_on_sit_area_player_exited)
+	handbrake.changed_state.connect(_on_handbrake_changed_state)
+	
+	set_brake_active(handbrake.active)
 
 
 func _physics_process(delta: float) -> void:
@@ -43,3 +48,17 @@ func set_steer_input(steer: float, throttle: float):
 	
 	steer_input = steer
 	throttle_input = throttle
+
+
+func set_brake_active(active: bool):
+	if active:
+		brake = brake_power
+	else:
+		brake = 0.0
+
+
+func _on_handbrake_changed_state(new_state: bool) -> void:
+	if not is_multiplayer_authority():
+		return
+	
+	set_brake_active(new_state)

@@ -1,0 +1,92 @@
+#class_name Player
+extends CharacterBody3D
+
+var mouse_sensitivity: float = 0.01
+
+@onready var head: Node3D = $Head
+@onready var camera: Camera3D = $Head/Camera3D
+@onready var camera_raycast: InteractionRayCast3D = $Head/CameraRaycast
+@onready var hand_marker: Marker3D = $Head/HandMarker
+@onready var state_machine: StateMachine = $StateMachine
+
+var constrain_y_rot: = false
+var constrain_y_rot_min := 0.0
+var constrain_y_rot_max := 0.0
+var constrain_y_rot_relative_obj: Node3D
+
+var interacted_object: InteractionArea3D
+
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
+
+
+func _ready() -> void:
+	camera.make_current()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _physics_process(delta: float) -> void:
+	pass
+
+
+func _process(delta: float) -> void:
+	_apply_y_rot_constraint()
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		rotate_y(-event.relative.x * mouse_sensitivity)
+		head.rotate_x(-event.relative.y * mouse_sensitivity)
+		head.rotation.x = clamp(head.rotation.x, -PI/2, PI/2)
+		_apply_y_rot_constraint()
+	
+	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+		if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		else:
+			var obj = camera_raycast.target_area
+			if obj:
+				_on_interact(obj)
+	
+	if event is InputEventMouseButton and event.is_released() and event.button_index == MOUSE_BUTTON_LEFT:
+		camera_raycast.end_interact()
+		interacted_object = null
+	
+	if event.is_action_pressed("ui_cancel"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_WM_WINDOW_FOCUS_IN:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _apply_y_rot_constraint():
+	if not constrain_y_rot:
+		return
+	
+	var ref_basis = Basis.IDENTITY
+	if is_instance_valid(constrain_y_rot_relative_obj):
+		ref_basis = constrain_y_rot_relative_obj.global_transform.basis.orthonormalized()
+	
+	var rel_basis = ref_basis.inverse() * global_transform.basis.orthonormalized()
+	var rel_euler = rel_basis.get_euler()
+	rel_euler.y = clampf(rel_euler.y, constrain_y_rot_min, constrain_y_rot_max)
+	
+	global_transform.basis = ref_basis * Basis.from_euler(rel_euler)
+
+
+func get_interacted_object() -> InteractionArea3D:
+	return camera_raycast.target_area
+
+
+func get_interacted_position():
+	if camera_raycast.is_focused:
+		return camera_raycast.target_point
+	return null
+
+
+func _on_interact(object: InteractionArea3D) -> void:
+	interacted_object = object
+	camera_raycast.start_interact()

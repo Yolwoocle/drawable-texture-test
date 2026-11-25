@@ -2,6 +2,12 @@
 class_name MultiplayerCharacterBody3DSynchronizer
 extends MultiplayerSynchronizer
 
+# Notes:
+# - Transform3D sends 12 floats/tick vs. 7 floats for Vector3 + Quaternion. If bandwith 
+#   is a priority, this could be refactored so that it sends "sync_position" + "sync_rotation"
+#   instead of "sync_transform".
+# - For now, this synchronizer ignores scale.
+
 var _body_parent: CharacterBody3D
 
 @export var interpolation_enabled: bool = true
@@ -16,11 +22,6 @@ var relative_object: Node3D
 
 var _local_transform: Transform3D
 var _snap_next_sync_flag: bool = true
-
-# Notes:
-# - Transform3D sends 12 floats/tick vs. 7 floats for Vector3 + Quaternion. If bandwith 
-#   is a priority, this could be refactored so that it sends "sync_position" + "sync_rotation"
-#   instead of "sync_transform"
 
 func _enter_tree() -> void:
 	replication_config = SceneReplicationConfig.new()
@@ -63,10 +64,6 @@ func _sync_from_authority() -> void:
 func _sync_as_authority(delta: float) -> void:
 	var interp_weight: float = 1.0 - exp(-interpolation_speed * delta)
 	
-	var offset_tranform = Transform3D.IDENTITY
-	if is_instance_valid(relative_object): # Translate relative transform to global
-		offset_tranform = relative_object.global_transform
-	
 	var local_position = _local_transform.origin
 	var local_rotation = _local_transform.basis.get_rotation_quaternion()
 	var sync_position = sync_transform.origin
@@ -87,6 +84,10 @@ func _sync_as_authority(delta: float) -> void:
 		local_rotation = local_rotation.slerp(sync_rotation_norm, interp_weight)
 		_local_transform = Transform3D(Basis(local_rotation), local_position)
 	
+	var offset_tranform = Transform3D.IDENTITY
+	if is_instance_valid(relative_object): # Translate relative transform to global
+		offset_tranform = relative_object.global_transform
+
 	var target_transform = offset_tranform * _local_transform
 	_body_parent.global_transform = target_transform
 	_body_parent.velocity = sync_velocity
@@ -118,7 +119,7 @@ func _set_relative_object_path(value: NodePath) -> void:
 		var old_obj_transf = relative_object.global_transform if is_instance_valid(relative_object) else Transform3D.IDENTITY
 		var new_obj_transf_inv = new_obj.global_transform.affine_inverse() if is_instance_valid(new_obj) else Transform3D.IDENTITY
 		
-		# _local_transform = (old location in its old local space) in new local space
+		# local transform = (old location in global space) in new local space
 		_local_transform = new_obj_transf_inv * (old_obj_transf * _local_transform)
 		
 	relative_object = new_obj

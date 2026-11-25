@@ -34,14 +34,12 @@ func enter():
 	var idx = -1
 	var devices = AudioServer.get_input_device_list()
 	input_device_option_button.clear()
-	print(AudioServer.input_device)
 	for i in devices.size():
 		var device = devices[i]
 		input_device_option_button.add_item(device)
 		if AudioServer.input_device == device:
 			idx = i
 	if idx == -1:
-		print("NOT FOUND")
 		idx = 0
 	input_device_option_button.select(idx)
 
