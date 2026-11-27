@@ -4,6 +4,7 @@ extends Node3D
 @onready var label: Label = $HUD/Label
 @onready var label_right: Label = %LabelRight
 @onready var actors: Node3D = $Actors
+@onready var player_spawn_location: Marker3D = $PlayerSpawnLocation
 
 const PLAYER = preload("uid://bt05aaf5nwip")
 const DEBUG_SESSION_ID_FILE = "user://debug_session_id.txt"
@@ -70,6 +71,7 @@ func _on_peer_disconnected(id: int) -> void:
 func spawn_player(peer_id: int):
 	var player = PLAYER.instantiate()
 	player.name = str(peer_id)
+	player.global_position = player_spawn_location.global_position
 	
 	actors.add_child(player, true)
 	

@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://dxwuc8fovhequ"]
 
-[ext_resource type="Script" uid="uid://iwo32ew1n53p" path="res://src/actors/caravan.gd" id="1_ekl5v"]
+[ext_resource type="Script" uid="uid://iwo32ew1n53p" path="res://src/actors/vehicle/caravan.gd" id="1_ekl5v"]
 [ext_resource type="Script" uid="uid://cuujpp6nbpmx3" path="res://addons/shaker/multiplayer/3d/multiplayer_rigid_body_3d_synchronizer.gd" id="2_0j8fe"]
-[ext_resource type="Script" uid="uid://d3a8xmv563h6o" path="res://src/actors/car_sit_area.gd" id="3_jv5nl"]
-[ext_resource type="Script" uid="uid://cm3esbwhp55lu" path="res://src/actors/vehicle_area_3d.gd" id="4_jv5nl"]
+[ext_resource type="Script" uid="uid://d3a8xmv563h6o" path="res://src/actors/vehicle/car_sit_area.gd" id="3_jv5nl"]
+[ext_resource type="Script" uid="uid://cm3esbwhp55lu" path="res://src/actors/vehicle/vehicle_area_3d.gd" id="4_jv5nl"]
 [ext_resource type="PackedScene" uid="uid://b3i2lo314576y" path="res://src/actors/drawable_map.tscn" id="4_q3tms"]
-[ext_resource type="PackedScene" uid="uid://dwh8kc5dkbudd" path="res://src/actors/handbrake.tscn" id="6_lu3n4"]
+[ext_resource type="PackedScene" uid="uid://dwh8kc5dkbudd" path="res://src/actors/vehicle/handbrake.tscn" id="6_lu3n4"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lbsk8"]
 
@@ -188,6 +188,7 @@ collision_mask = 5
 mass = 1500.0
 center_of_mass_mode = 1
 script = ExtResource("1_ekl5v")
+engine_power = 5000.0
 
 [node name="MultiplayerRigidBody3DSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=83068229]
 replication_config = SubResource("SceneReplicationConfig_lbsk8")
@@ -487,7 +488,7 @@ mesh = SubResource("CylinderMesh_cnp54")
 [node name="Visuals" type="Node3D" parent="." unique_id=993328429]
 
 [node name="DrawableMap" parent="." unique_id=918664201 instance=ExtResource("4_q3tms")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9087781, 1.0634499)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88371086, 1.0634499)
 size = Vector2(2.5, 2.5)
 
 [node name="Handbrake" parent="." unique_id=216961361 instance=ExtResource("6_lu3n4")]

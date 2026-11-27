@@ -125,15 +125,16 @@ func _apply_y_rot_constraint():
 	if not constrain_y_rot:
 		return
 	
-	var ref_basis = Basis.IDENTITY
-	if is_instance_valid(constrain_y_rot_relative_obj):
-		ref_basis = constrain_y_rot_relative_obj.global_transform.basis.orthonormalized()
-	
-	var rel_basis = ref_basis.inverse() * global_transform.basis.orthonormalized()
-	var rel_euler = rel_basis.get_euler()
-	rel_euler.y = clampf(rel_euler.y, constrain_y_rot_min, constrain_y_rot_max)
-	
-	global_transform.basis = ref_basis * Basis.from_euler(rel_euler)
+	#TODO
+	#var ref_basis = Basis.IDENTITY
+	#if is_instance_valid(constrain_y_rot_relative_obj):
+		#ref_basis = constrain_y_rot_relative_obj.global_transform.basis.orthonormalized()
+	#
+	#var rel_basis = ref_basis.inverse() * global_transform.basis.orthonormalized()
+	#var rel_euler = rel_basis.get_euler()
+	#rel_euler.y = clampf(rel_euler.y, constrain_y_rot_min, constrain_y_rot_max)
+	#
+	#global_transform.basis = ref_basis * Basis.from_euler(rel_euler)
 
 
 func get_interacted_object():

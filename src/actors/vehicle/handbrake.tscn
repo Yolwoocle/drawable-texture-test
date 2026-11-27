@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dwh8kc5dkbudd"]
 
 [ext_resource type="Script" uid="uid://dw1pbag08kead" path="res://addons/shaker/gameplay/3d/interaction_area_3d.gd" id="1_lusmm"]
-[ext_resource type="Script" uid="uid://ckcm5cnsunksy" path="res://src/actors/handbrake.gd" id="1_sw0c6"]
+[ext_resource type="Script" uid="uid://ckcm5cnsunksy" path="res://src/actors/vehicle/handbrake.gd" id="1_sw0c6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
 size = Vector3(0.34375, 0.5, 1)
